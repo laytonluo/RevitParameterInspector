@@ -49,6 +49,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RevitParameterInspector.Core\RevitParameterInspector.Core.csproj" />
+    <ProjectReference Include="..\RevitParameterInspector.UI\RevitParameterInspector.UI.csproj" />
   </ItemGroup>
 
 </Project>

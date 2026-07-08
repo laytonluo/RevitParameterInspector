@@ -1,0 +1,116 @@
+<Window x:Class="RevitParameterInspector.UI.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="{Binding WindowTitle}"
+        Width="900" Height="650"
+        WindowStartupLocation="CenterOwner">
+    <TabControl Margin="8">
+
+        <TabItem Header="Summary">
+            <DataGrid ItemsSource="{Binding SummaryRows}"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      HeadersVisibility="Column"
+                      GridLinesVisibility="Horizontal"
+                      CanUserAddRows="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Field" Binding="{Binding Field}" Width="220" />
+                    <DataGridTextColumn Header="Value" Binding="{Binding Value}" Width="*" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </TabItem>
+
+        <TabItem Header="Parameters">
+            <DockPanel>
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,6">
+                    <TextBlock Text="Search:" VerticalAlignment="Center" Margin="0,0,4,0" />
+                    <TextBox Text="{Binding ParameterSearchText, UpdateSourceTrigger=PropertyChanged}" Width="260" Margin="0,0,16,0" />
+                    <TextBlock Text="Scope:" VerticalAlignment="Center" Margin="0,0,4,0" />
+                    <ComboBox ItemsSource="{Binding ParameterScopeOptions}" SelectedItem="{Binding SelectedParameterScope}" Width="100" />
+                </StackPanel>
+                <DataGrid ItemsSource="{Binding FilteredParameters}"
+                          AutoGenerateColumns="False"
+                          IsReadOnly="True"
+                          HeadersVisibility="Column"
+                          GridLinesVisibility="Horizontal"
+                          CanUserAddRows="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="160" />
+                        <DataGridTextColumn Header="Localized Name" Binding="{Binding LocalizedName}" Width="120" />
+                        <DataGridTextColumn Header="Scope" Binding="{Binding Scope}" Width="70" />
+                        <DataGridTextColumn Header="Value" Binding="{Binding ValueDisplay}" Width="140" />
+                        <DataGridTextColumn Header="Raw Value" Binding="{Binding ValueRaw}" Width="100" />
+                        <DataGridTextColumn Header="Storage Type" Binding="{Binding StorageType}" Width="90" />
+                        <DataGridTextColumn Header="Built-in Parameter" Binding="{Binding BuiltInParameter}" Width="160" />
+                        <DataGridTextColumn Header="Kind" Binding="{Binding ParameterKind}" Width="100" />
+                        <DataGridTextColumn Header="Read Only" Binding="{Binding IsReadOnly}" Width="70" />
+                        <DataGridTextColumn Header="Has Value" Binding="{Binding HasValue}" Width="70" />
+                        <DataGridTextColumn Header="API Path" Binding="{Binding ApiPath}" Width="160" />
+                        <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+        </TabItem>
+
+        <TabItem Header="Geometry">
+            <DataGrid ItemsSource="{Binding GeometryRows}"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      HeadersVisibility="Column"
+                      GridLinesVisibility="Horizontal"
+                      CanUserAddRows="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Field" Binding="{Binding Field}" Width="220" />
+                    <DataGridTextColumn Header="Value" Binding="{Binding Value}" Width="*" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </TabItem>
+
+        <TabItem Header="Location">
+            <DataGrid ItemsSource="{Binding LocationRows}"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      HeadersVisibility="Column"
+                      GridLinesVisibility="Horizontal"
+                      CanUserAddRows="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Field" Binding="{Binding Field}" Width="220" />
+                    <DataGridTextColumn Header="Value" Binding="{Binding Value}" Width="*" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </TabItem>
+
+        <TabItem Header="Relationships">
+            <DataGrid ItemsSource="{Binding RelationshipRows}"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      HeadersVisibility="Column"
+                      GridLinesVisibility="Horizontal"
+                      CanUserAddRows="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Field" Binding="{Binding Field}" Width="220" />
+                    <DataGridTextColumn Header="Value" Binding="{Binding Value}" Width="*" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </TabItem>
+
+        <TabItem Header="Raw JSON">
+            <DockPanel>
+                <Button DockPanel.Dock="Top"
+                        Content="Copy JSON"
+                        HorizontalAlignment="Left"
+                        Margin="0,0,0,6"
+                        Padding="8,2"
+                        Click="OnCopyJsonClick" />
+                <TextBox Text="{Binding RawJson, Mode=OneWay}"
+                         IsReadOnly="True"
+                         FontFamily="Consolas"
+                         TextWrapping="NoWrap"
+                         AcceptsReturn="True"
+                         VerticalScrollBarVisibility="Auto"
+                         HorizontalScrollBarVisibility="Auto" />
+            </DockPanel>
+        </TabItem>
+
+    </TabControl>
+</Window>

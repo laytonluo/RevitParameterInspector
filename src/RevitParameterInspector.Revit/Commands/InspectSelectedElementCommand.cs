@@ -4,15 +4,15 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using RevitParameterInspector.Revit.Builders;
 using RevitParameterInspector.Revit.Selection;
-using CoreModels = RevitParameterInspector.Core.Models;
+using RevitParameterInspector.UI;
 
 namespace RevitParameterInspector.Revit.Commands;
 
 /// <summary>
 /// Entry point external command implementing the selection workflow from HANDOFF Section 34:
 /// use the current selection if there is exactly one element, otherwise prompt to pick one.
-/// The full WPF inspector UI is not implemented yet; this command shows a plain-text
-/// TaskDialog summary to prove the read pipeline end-to-end (Sections 5.1, 44.1).
+/// Shows the WPF inspector window (Summary/Parameters/Geometry/Location/Relationships/Raw
+/// JSON). Dictionary and View/Sheet Context tabs are not included in this step.
 /// </summary>
 [Transaction(TransactionMode.ReadOnly)]
 [Regeneration(RegenerationOption.Manual)]
@@ -37,7 +37,7 @@ public sealed class InspectSelectedElementCommand : IExternalCommand
         try
         {
             var snapshot = ElementContextSnapshotBuilder.Build(element);
-            ShowSummary(snapshot);
+            InspectorWindowLauncher.Show(snapshot, commandData.Application.MainWindowHandle);
             return Result.Succeeded;
         }
         catch (Exception ex)
@@ -68,22 +68,5 @@ public sealed class InspectSelectedElementCommand : IExternalCommand
         }
 
         return selectionReader.PickSingleElement(uiDocument);
-    }
-
-    private static void ShowSummary(CoreModels.ElementContextSnapshot snapshot)
-    {
-        var identity = snapshot.Identity;
-        var classification = snapshot.Classification;
-
-        var summary =
-            $"ElementId: {identity?.ElementIdString}\n" +
-            $"Class: {identity?.ClassName}\n" +
-            $"Category: {identity?.CategoryName} ({identity?.BuiltInCategory})\n" +
-            $"Name: {identity?.Name}\n" +
-            $"Kind: {classification?.ElementKind}\n" +
-            $"Parameters read: {snapshot.Parameters.Count}\n\n" +
-            "This is a temporary text summary; the full WPF inspector UI is not implemented yet.";
-
-        TaskDialog.Show("RevitParameterInspector - Inspect Selected Element", summary);
     }
 }

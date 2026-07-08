@@ -7,8 +7,8 @@ namespace RevitParameterInspector.Revit.Builders;
 
 /// <summary>
 /// Assembles the partial <see cref="CoreModels.ElementContextSnapshot"/> available at this
-/// step: Document, Identity, Classification, and Parameters (instance + type). Geometry,
-/// Location, Relationships, and View/Sheet context builders are added in a later step.
+/// step: Document, Identity, Classification, Parameters (instance + type), Geometry,
+/// Location, and Relationships. View/Sheet context builders are added in a later step.
 /// </summary>
 public static class ElementContextSnapshotBuilder
 {
@@ -33,6 +33,9 @@ public static class ElementContextSnapshotBuilder
             },
             Identity = IdentityInfoBuilder.Build(element),
             Classification = ClassificationInfoBuilder.Build(element),
+            Geometry = GeometryInfoBuilder.Build(element),
+            Location = LocationInfoBuilder.Build(element),
+            Relationships = RelationshipInfoBuilder.Build(element),
         };
 
         snapshot.Parameters.AddRange(ParameterReader.ReadInstanceParameters(element));
