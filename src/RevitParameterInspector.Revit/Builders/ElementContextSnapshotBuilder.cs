@@ -1,5 +1,6 @@
 using System;
 using Autodesk.Revit.DB;
+using RevitParameterInspector.Dictionary;
 using RevitParameterInspector.Revit.Parameters;
 using CoreModels = RevitParameterInspector.Core.Models;
 
@@ -12,7 +13,11 @@ namespace RevitParameterInspector.Revit.Builders;
 /// </summary>
 public static class ElementContextSnapshotBuilder
 {
-    public static CoreModels.ElementContextSnapshot Build(Element element)
+    /// <param name="resolver">
+    /// Optional Dictionary Engine resolver (HANDOFF Section 20). When null, the snapshot is
+    /// still fully built with raw API names only (HANDOFF Section 5.2).
+    /// </param>
+    public static CoreModels.ElementContextSnapshot Build(Element element, DictionaryResolver? resolver = null)
     {
         var document = element.Document;
         var application = document.Application;
@@ -31,16 +36,16 @@ public static class ElementContextSnapshotBuilder
                 RevitProductName = application?.VersionName,
                 RevitBuildNumber = application?.VersionBuild,
             },
-            Identity = IdentityInfoBuilder.Build(element),
-            Classification = ClassificationInfoBuilder.Build(element),
+            Identity = IdentityInfoBuilder.Build(element, resolver),
+            Classification = ClassificationInfoBuilder.Build(element, resolver),
             Geometry = GeometryInfoBuilder.Build(element),
             Location = LocationInfoBuilder.Build(element),
             Relationships = RelationshipInfoBuilder.Build(element),
         };
 
-        snapshot.Parameters.AddRange(ParameterReader.ReadInstanceParameters(element));
+        snapshot.Parameters.AddRange(ParameterReader.ReadInstanceParameters(element, resolver));
 
-        var typeParameters = ParameterReader.ReadTypeParameters(element);
+        var typeParameters = ParameterReader.ReadTypeParameters(element, resolver);
         if (typeParameters is not null)
         {
             snapshot.Parameters.AddRange(typeParameters);

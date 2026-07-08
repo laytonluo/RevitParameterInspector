@@ -21,4 +21,13 @@ public sealed class IdentityInfo
     public string? LinkedDocumentTitle { get; set; }
     public long? LinkedElementId { get; set; }
     public string? ApiPath { get; set; }
+
+    // Dictionary lookups are additive only; ClassName/BuiltInCategory above always stay raw (HANDOFF Section 5.3).
+    public string? ClassNameLocalized { get; set; }
+    public string? ClassNameDescription { get; set; }
+    public DictionaryStatus ClassNameDictionaryStatus { get; set; } = DictionaryStatus.NotFound;
+
+    public string? BuiltInCategoryLocalized { get; set; }
+    public string? BuiltInCategoryDescription { get; set; }
+    public DictionaryStatus BuiltInCategoryDictionaryStatus { get; set; } = DictionaryStatus.NotFound;
 }

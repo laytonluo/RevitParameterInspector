@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using Autodesk.Revit.DB;
+using RevitParameterInspector.Dictionary;
 using RevitParameterInspector.Revit.Compatibility;
 using CoreModels = RevitParameterInspector.Core.Models;
 
@@ -13,11 +14,11 @@ namespace RevitParameterInspector.Revit.Parameters;
 /// </summary>
 public static class ParameterReader
 {
-    public static List<CoreModels.ParameterInfoRecord> ReadInstanceParameters(Element element)
-        => ReadParameters(element, CoreModels.ParameterScope.Instance, "Element.GetOrderedParameters()");
+    public static List<CoreModels.ParameterInfoRecord> ReadInstanceParameters(Element element, DictionaryResolver? resolver = null)
+        => ReadParameters(element, CoreModels.ParameterScope.Instance, "Element.GetOrderedParameters()", resolver);
 
     /// <summary>Returns null if the element has no type (e.g. it is itself an ElementType).</summary>
-    public static List<CoreModels.ParameterInfoRecord>? ReadTypeParameters(Element element)
+    public static List<CoreModels.ParameterInfoRecord>? ReadTypeParameters(Element element, DictionaryResolver? resolver = null)
     {
         var typeId = element.GetTypeId();
         if (typeId == ElementId.InvalidElementId)
@@ -35,6 +36,7 @@ public static class ParameterReader
             typeElement,
             CoreModels.ParameterScope.Type,
             "ElementType.GetOrderedParameters()",
+            resolver,
             RevitCompatibility.GetIdValue(typeId));
     }
 
@@ -42,6 +44,7 @@ public static class ParameterReader
         Element source,
         CoreModels.ParameterScope scope,
         string apiPath,
+        DictionaryResolver? resolver,
         long? sourceElementIdOverride = null)
     {
         var records = new List<CoreModels.ParameterInfoRecord>();
@@ -52,7 +55,7 @@ public static class ParameterReader
         {
             try
             {
-                records.Add(BuildRecord(parameter, scope, apiPath, sourceElementId, isFamilyDocument));
+                records.Add(BuildRecord(parameter, scope, apiPath, sourceElementId, isFamilyDocument, resolver));
             }
             catch
             {
@@ -68,7 +71,8 @@ public static class ParameterReader
         CoreModels.ParameterScope scope,
         string apiPath,
         long sourceElementId,
-        bool isFamilyDocument)
+        bool isFamilyDocument,
+        DictionaryResolver? resolver)
     {
         var definition = parameter.Definition;
         var builtInParameter = (definition as InternalDefinition)?.BuiltInParameter ?? BuiltInParameter.INVALID;
@@ -82,7 +86,7 @@ public static class ParameterReader
                     ? CoreModels.ParameterKind.FamilyParameter
                     : CoreModels.ParameterKind.ProjectParameter;
 
-        return new CoreModels.ParameterInfoRecord
+        var record = new CoreModels.ParameterInfoRecord
         {
             Name = definition?.Name,
             ApiPath = apiPath,
@@ -107,6 +111,19 @@ public static class ParameterReader
             SourceElementId = sourceElementId,
             DictionaryStatus = CoreModels.DictionaryStatus.NotFound,
         };
+
+        // Only BuiltInParameter is a stable, locale-independent API identifier worth looking up;
+        // Shared/Project/Family parameters are user-created and must never be translated (HANDOFF Section 5.4).
+        if (resolver is not null && isBuiltIn)
+        {
+            var term = resolver.Resolve(record.BuiltInParameter!);
+            record.LocalizedName = term.LocalizedName;
+            record.Description = term.Description;
+            record.Keywords = term.Keywords;
+            record.DictionaryStatus = term.Status;
+        }
+
+        return record;
     }
 
     private static string? SafeGetValueRaw(Parameter parameter)

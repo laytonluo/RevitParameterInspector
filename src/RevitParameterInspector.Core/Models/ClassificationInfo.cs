@@ -20,4 +20,9 @@ public sealed class ClassificationInfo
 
     /// <summary>Which inspection groups (Parameters/Geometry/Location/etc.) are meaningful for this element.</summary>
     public List<string> SupportedInspectionGroups { get; set; } = new();
+
+    // Dictionary lookup for ElementKind's Revit-facing term (e.g. Sheet -> "ViewSheet"); additive only.
+    public string? ElementKindLocalized { get; set; }
+    public string? ElementKindDescription { get; set; }
+    public DictionaryStatus ElementKindDictionaryStatus { get; set; } = DictionaryStatus.NotFound;
 }

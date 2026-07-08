@@ -1,4 +1,5 @@
 using Autodesk.Revit.DB;
+using RevitParameterInspector.Dictionary;
 using CoreModels = RevitParameterInspector.Core.Models;
 
 namespace RevitParameterInspector.Revit.Builders;
@@ -6,7 +7,11 @@ namespace RevitParameterInspector.Revit.Builders;
 /// <summary>Builds <see cref="CoreModels.ClassificationInfo"/> from a Revit element. See HANDOFF Section 12.</summary>
 public static class ClassificationInfoBuilder
 {
-    public static CoreModels.ClassificationInfo Build(Element element)
+    /// <param name="resolver">
+    /// Optional Dictionary Engine resolver (HANDOFF Section 20). When null, dictionary fields
+    /// are simply left unset; the Inspector still works (HANDOFF Section 5.2).
+    /// </param>
+    public static CoreModels.ClassificationInfo Build(Element element, DictionaryResolver? resolver = null)
     {
         var category = element.Category;
         var builtInCategory = TryGetBuiltInCategory(category);
@@ -67,8 +72,36 @@ public static class ClassificationInfoBuilder
             classification.SupportedInspectionGroups.Add("SheetContext");
         }
 
+        ApplyDictionary(classification, resolver);
+
         return classification;
     }
+
+    private static void ApplyDictionary(CoreModels.ClassificationInfo classification, DictionaryResolver? resolver)
+    {
+        var apiTermName = MapElementKindToApiTermName(classification.ElementKind);
+        if (resolver is null || apiTermName is null)
+        {
+            return;
+        }
+
+        var term = resolver.Resolve(apiTermName);
+        classification.ElementKindLocalized = term.LocalizedName;
+        classification.ElementKindDescription = term.Description;
+        classification.ElementKindDictionaryStatus = term.Status;
+    }
+
+    /// <summary>Maps our normalized ElementKind to the raw Revit API term name the dictionary keys on.</summary>
+    private static string? MapElementKindToApiTermName(CoreModels.ElementKind elementKind) => elementKind switch
+    {
+        CoreModels.ElementKind.View => "View",
+        CoreModels.ElementKind.Sheet => "ViewSheet",
+        CoreModels.ElementKind.Viewport => "Viewport",
+        CoreModels.ElementKind.TitleBlock => "TitleBlock",
+        CoreModels.ElementKind.ElementType => "ElementType",
+        CoreModels.ElementKind.Material => "Material",
+        _ => null,
+    };
 
     private static CoreModels.ElementKind DetermineElementKind(
         Element element,

@@ -50,6 +50,15 @@
   <ItemGroup>
     <ProjectReference Include="..\RevitParameterInspector.Core\RevitParameterInspector.Core.csproj" />
     <ProjectReference Include="..\RevitParameterInspector.UI\RevitParameterInspector.UI.csproj" />
+    <ProjectReference Include="..\RevitParameterInspector.Dictionary\RevitParameterInspector.Dictionary.csproj" />
+  </ItemGroup>
+
+  <!-- Ship the built-in dictionary next to the add-in so DictionaryEngine can find it at runtime. -->
+  <ItemGroup>
+    <None Include="..\..\dictionary\**\*.json">
+      <Link>dictionary\%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
