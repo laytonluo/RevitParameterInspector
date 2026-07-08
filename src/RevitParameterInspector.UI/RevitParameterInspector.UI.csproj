@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net48;net8.0-windows</TargetFrameworks>
+    <UseWPF>true</UseWPF>
+    <RootNamespace>RevitParameterInspector.UI</RootNamespace>
+    <AssemblyName>RevitParameterInspector.UI</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RevitParameterInspector.Core\RevitParameterInspector.Core.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,23 @@
+## Build artifacts
+[Bb]in/
+[Oo]bj/
+*.user
+*.suo
+
+## Visual Studio
+.vs/
+*.userosscache
+*.sln.docstates
+
+## Rider / JetBrains
+.idea/
+
+## VS Code
+.vscode/
+
+## Misc OS
+.DS_Store
+Thumbs.db
+
+## Local export output (not sample fixtures)
+/samples/**/*.local.*

@@ -1,0 +1,54 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- net48 => Revit 2024, net8.0-windows => Revit 2025 (default) or 2026 via -p:RevitVersion=2026 -->
+    <TargetFrameworks>net48;net8.0-windows</TargetFrameworks>
+    <RootNamespace>RevitParameterInspector.Revit</RootNamespace>
+    <AssemblyName>RevitParameterInspector.Revit</AssemblyName>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+  </PropertyGroup>
+
+  <!-- Resolve which Revit version this TFM+property combination targets. -->
+  <PropertyGroup Condition="'$(TargetFramework)'=='net48'">
+    <EffectiveRevitVersion>2024</EffectiveRevitVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)'=='net8.0-windows' AND '$(RevitVersion)'==''">
+    <EffectiveRevitVersion>2025</EffectiveRevitVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)'=='net8.0-windows' AND '$(RevitVersion)'!=''">
+    <EffectiveRevitVersion>$(RevitVersion)</EffectiveRevitVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(EffectiveRevitVersion)'=='2024'">
+    <DefineConstants>$(DefineConstants);REVIT2024;REVIT2024_OR_GREATER</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(EffectiveRevitVersion)'=='2025'">
+    <DefineConstants>$(DefineConstants);REVIT2025;REVIT2024_OR_GREATER;REVIT2025_OR_GREATER</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(EffectiveRevitVersion)'=='2026'">
+    <DefineConstants>$(DefineConstants);REVIT2026;REVIT2024_OR_GREATER;REVIT2025_OR_GREATER</DefineConstants>
+  </PropertyGroup>
+
+  <!-- Override with an environment variable or -p:RevitInstallDir=... if Revit is installed elsewhere. -->
+  <PropertyGroup Condition="'$(RevitInstallDir)'==''">
+    <RevitInstallDir>C:\Program Files\Autodesk\Revit $(EffectiveRevitVersion)</RevitInstallDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="RevitAPI">
+      <HintPath>$(RevitInstallDir)\RevitAPI.dll</HintPath>
+      <Private>false</Private>
+      <SpecificVersion>false</SpecificVersion>
+    </Reference>
+    <Reference Include="RevitAPIUI">
+      <HintPath>$(RevitInstallDir)\RevitAPIUI.dll</HintPath>
+      <Private>false</Private>
+      <SpecificVersion>false</SpecificVersion>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RevitParameterInspector.Core\RevitParameterInspector.Core.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,17 @@
+<Project>
+
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Deterministic>true</Deterministic>
+    <Company>RevitParameterInspector</Company>
+    <Product>RevitParameterInspector</Product>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <!-- V1 schema/add-in versioning; bump as the project evolves. -->
+    <RevitParameterInspectorVersion>0.1.0</RevitParameterInspectorVersion>
+    <Version>$(RevitParameterInspectorVersion)</Version>
+  </PropertyGroup>
+
+</Project>

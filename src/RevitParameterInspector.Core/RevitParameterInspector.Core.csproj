@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- net48 => Revit 2024, net8.0-windows => Revit 2025/2026. Core stays Revit-API-free. -->
+    <TargetFrameworks>net48;net8.0-windows</TargetFrameworks>
+    <RootNamespace>RevitParameterInspector.Core</RootNamespace>
+    <AssemblyName>RevitParameterInspector.Core</AssemblyName>
+  </PropertyGroup>
+
+</Project>

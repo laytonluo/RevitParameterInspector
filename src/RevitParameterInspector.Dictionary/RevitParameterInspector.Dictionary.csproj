@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net48;net8.0-windows</TargetFrameworks>
+    <RootNamespace>RevitParameterInspector.Dictionary</RootNamespace>
+    <AssemblyName>RevitParameterInspector.Dictionary</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RevitParameterInspector.Core\RevitParameterInspector.Core.csproj" />
+  </ItemGroup>
+
+</Project>
