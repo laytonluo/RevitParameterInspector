@@ -9,11 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RevitParameterInspector.Core\RevitParameterInspector.Core.csproj" />
-  </ItemGroup>
-
-  <!-- net8.0-windows ships System.Text.Json in the shared framework; net48 needs the package. -->
-  <ItemGroup Condition="'$(TargetFramework)'=='net48'">
-    <PackageReference Include="System.Text.Json" Version="8.0.5" />
+    <ProjectReference Include="..\RevitParameterInspector.Export\RevitParameterInspector.Export.csproj" />
   </ItemGroup>
 
 </Project>

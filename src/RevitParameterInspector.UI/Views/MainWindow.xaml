@@ -4,7 +4,15 @@
         Title="{Binding WindowTitle}"
         Width="900" Height="650"
         WindowStartupLocation="CenterOwner">
-    <TabControl Margin="8">
+    <DockPanel Margin="8">
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,8,0,0">
+            <Button Content="Export JSON" Padding="10,4" Margin="0,0,8,0" Click="OnExportJsonClick" />
+            <Button Content="Export Markdown" Padding="10,4" Margin="0,0,8,0" Click="OnExportMarkdownClick" />
+            <Button Content="Export Excel" Padding="10,4" Margin="0,0,8,0" Click="OnExportExcelClick" />
+            <Button Content="Copy AI Context" Padding="10,4" Click="OnCopyAiContextClick" />
+        </StackPanel>
+
+        <TabControl>
 
         <TabItem Header="Summary">
             <DataGrid ItemsSource="{Binding SummaryRows}"
@@ -112,5 +120,6 @@
             </DockPanel>
         </TabItem>
 
-    </TabControl>
+        </TabControl>
+    </DockPanel>
 </Window>

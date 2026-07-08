@@ -4,25 +4,20 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text.Json;
 using RevitParameterInspector.Core.Models;
-using RevitParameterInspector.UI.Support;
+using RevitParameterInspector.Core.Support;
+using RevitParameterInspector.Export;
 
 namespace RevitParameterInspector.UI.ViewModels;
 
 /// <summary>
 /// Backs <see cref="Views.MainWindow"/>. Presents a single, already-built
 /// <see cref="ElementContextSnapshot"/> across the Summary/Parameters/Geometry/Location/
-/// Relationships/Raw JSON tabs. Dictionary, View/Sheet Context, and AI Context are not
-/// included in this step.
+/// Relationships/Raw JSON tabs, plus the Export JSON/Markdown/Excel and Copy AI Context
+/// actions. Dictionary and View/Sheet Context tabs are not included in this step.
 /// </summary>
 public sealed class MainWindowViewModel : INotifyPropertyChanged
 {
-    private static readonly JsonSerializerOptions JsonOptions = new()
-    {
-        WriteIndented = true,
-    };
-
     private readonly List<ParameterInfoRecord> _allParameters;
     private string _parameterSearchText = string.Empty;
     private string _selectedParameterScope = AllScopesOption;
@@ -87,7 +82,7 @@ public sealed class MainWindowViewModel : INotifyPropertyChanged
         GeometryRows = ObjectInspector.ToFieldRows(snapshot.Geometry);
         LocationRows = ObjectInspector.ToFieldRows(snapshot.Location);
         RelationshipRows = ObjectInspector.ToFieldRows(snapshot.Relationships);
-        RawJson = JsonSerializer.Serialize(snapshot, JsonOptions);
+        RawJson = JsonExporter.Serialize(snapshot);
 
         ApplyParameterFilter();
     }

@@ -10,4 +10,14 @@
     <ProjectReference Include="..\RevitParameterInspector.Core\RevitParameterInspector.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- MIT licensed; used only for the .xlsx exporter (Section 32.3). -->
+    <PackageReference Include="ClosedXML" Version="0.105.0" />
+  </ItemGroup>
+
+  <!-- net8.0-windows ships System.Text.Json in the shared framework; net48 needs the package. -->
+  <ItemGroup Condition="'$(TargetFramework)'=='net48'">
+    <PackageReference Include="System.Text.Json" Version="8.0.5" />
+  </ItemGroup>
+
 </Project>

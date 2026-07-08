@@ -5,12 +5,13 @@ using System.Linq;
 using System.Reflection;
 using RevitParameterInspector.Core.Models;
 
-namespace RevitParameterInspector.UI.Support;
+namespace RevitParameterInspector.Core.Support;
 
 /// <summary>
 /// Turns any Core model object into a flat list of Field/Value rows via reflection, so
-/// Geometry/Location/Relationships can share one generic detail grid instead of a bespoke
-/// form per tab (HANDOFF Section 22.1: "practical, not over-designed").
+/// Geometry/Location/Relationships can share one generic detail view (UI grid or Excel
+/// sheet) instead of a bespoke form per field (HANDOFF Section 22.1: "practical, not
+/// over-designed").
 /// </summary>
 public static class ObjectInspector
 {
