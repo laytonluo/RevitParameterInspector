@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ApplicationPackage SchemaVersion="1.0"
+                     AutodeskProduct="Revit"
+                     ProductType="Application"
+                     Name="RevitParameterInspector"
+                     AppVersion="0.1.0"
+                     Author="RevitParameterInspector Contributors"
+                     ProductCode="{5B1E2E7B-9E6D-4A8C-9B6A-2E7F7B8F9C10}"
+                     UpgradeCode="{5B1E2E7B-9E6D-4A8C-9B6A-2E7F7B8F9C11}">
+  <CompanyDetails Name="RevitParameterInspector Contributors"
+                  Url="https://github.com/laytonluo/RevitParameterInspector" />
+  <Components Description="RevitParameterInspector">
+    <RuntimeRequirements OS="Win64" Platform="Revit" SeriesMin="R2024" SeriesMax="R2026" />
+    <ComponentEntry AppName="RevitParameterInspector"
+                    Version="0.1.0"
+                    ModuleName="./Contents/2024/RevitParameterInspector.addin"
+                    AppDescription="Structured, read-only Revit element context inspector"
+                    LoadOnCommandInvocation="false"
+                    LoadOnStartup="true">
+      <Platform SeriesMin="R2024" SeriesMax="R2024" />
+    </ComponentEntry>
+    <ComponentEntry AppName="RevitParameterInspector"
+                    Version="0.1.0"
+                    ModuleName="./Contents/2025/RevitParameterInspector.addin"
+                    AppDescription="Structured, read-only Revit element context inspector"
+                    LoadOnCommandInvocation="false"
+                    LoadOnStartup="true">
+      <Platform SeriesMin="R2025" SeriesMax="R2025" />
+    </ComponentEntry>
+    <ComponentEntry AppName="RevitParameterInspector"
+                    Version="0.1.0"
+                    ModuleName="./Contents/2026/RevitParameterInspector.addin"
+                    AppDescription="Structured, read-only Revit element context inspector"
+                    LoadOnCommandInvocation="false"
+                    LoadOnStartup="true">
+      <Platform SeriesMin="R2026" SeriesMax="R2026" />
+    </ComponentEntry>
+  </Components>
+</ApplicationPackage>

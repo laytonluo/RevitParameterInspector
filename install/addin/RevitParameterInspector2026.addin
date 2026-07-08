@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Command">
+    <Name>RevitParameterInspector</Name>
+    <Assembly>.\RevitParameterInspector.Revit.dll</Assembly>
+    <AddInId>A36140E8-76E2-44A5-8D14-83B70D6D9038</AddInId>
+    <FullClassName>RevitParameterInspector.Revit.Commands.InspectSelectedElementCommand</FullClassName>
+    <VendorId>RPI</VendorId>
+    <VendorDescription>RevitParameterInspector Contributors</VendorDescription>
+  </AddIn>
+</RevitAddIns>

@@ -52,30 +52,16 @@ Alternatively, open `RevitParameterInspector.sln` in Visual Studio and build the
 
 ## Loading it into Revit
 
-There is no packaged installer yet (`install/addin` and `install/bundle` are still empty - see
-the README's implementation status). Until then, register the add-in manually:
+`install/addin/` and `install/bundle/` have ready-to-use manifests - see
+[install/README.md](../install/README.md) for the two options (a per-version manifest you copy
+next to the build output, or a single machine-wide bundle covering every installed version).
+The short version:
 
 1. Build the project for your Revit version (see above).
-2. Create a `.addin` manifest, e.g.
-   `%APPDATA%\Autodesk\Revit\Addins\<version>\RevitParameterInspector.addin`:
-
-   ```xml
-   <?xml version="1.0" encoding="utf-8"?>
-   <RevitAddIns>
-     <AddIn Type="Command">
-       <Name>RevitParameterInspector</Name>
-       <Assembly>C:\path\to\RevitParameterInspector.Revit.dll</Assembly>
-       <AddInId>3C4A9F2E-1B5D-4E6A-8F3C-2D7B9E1A6C40</AddInId>
-       <FullClassName>RevitParameterInspector.Revit.Commands.InspectSelectedElementCommand</FullClassName>
-       <VendorId>RPI</VendorId>
-       <VendorDescription>RevitParameterInspector Contributors</VendorDescription>
-     </AddIn>
-   </RevitAddIns>
-   ```
-
-   Point `<Assembly>` at the actual build output path from the previous step, and generate a
-   fresh GUID for `<AddInId>` (any GUID works; the one above is just an example - don't reuse
-   it verbatim in a real install).
+2. Copy the matching `install/addin/RevitParameterInspector<version>.addin` next to the build
+   output DLLs in `%APPDATA%\Autodesk\Revit\Addins\<version>\` - or run
+   `install/bundle/build-bundle.ps1` and copy the resulting `.bundle` folder to
+   `%ProgramData%\Autodesk\ApplicationPlugins\` instead.
 3. Start Revit. The command becomes available under **Add-Ins > External Tools**. There is no
    dedicated ribbon panel yet (also an open item in the README's status list).
 

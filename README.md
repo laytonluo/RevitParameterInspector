@@ -81,12 +81,16 @@ This is under active development against the HANDOFF spec. Current state:
 - [x] One representative example (a Viewport on a sheet) exercising every section, in
       `samples/json`, `samples/markdown`, and `samples/excel`
 
+### Install packaging (`install/`)
+- [x] Per-version `.addin` manifests (`install/addin/`) and a multi-version
+      `.bundle` (`install/bundle/`, with a `build-bundle.ps1` packaging script) - see
+      `install/README.md`
+
 ### Not started
-- `install/addin`, `install/bundle` (.addin manifest, packaged install bundle - see
-  `docs/getting-started.md` for the current manual registration steps)
 - Verification against a real Revit installation (not available in the environment this was
   built in - Revit API references resolve but haven't been exercised inside Revit itself; see
   `docs/revit-version-support.md`)
+- CI/release pipeline for the install packaging (currently a manual, local script)
 
 ## License
 
