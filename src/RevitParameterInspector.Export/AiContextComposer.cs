@@ -26,6 +26,7 @@ public static class AiContextComposer
         AppendGeometrySummary(sb, snapshot.Geometry);
         AppendLocationSummary(sb, snapshot.Location);
         AppendRelationshipSummary(sb, snapshot.Relationships);
+        AppendViewSheetSummary(sb, snapshot);
         AppendApiPathNotes(sb, snapshot);
         AppendDictionaryNotes(sb, snapshot);
 
@@ -109,6 +110,35 @@ public static class AiContextComposer
 
         var joined = string.Join(", ", parts);
         sb.AppendLine(string.IsNullOrEmpty(joined) ? "_No related objects detected._" : joined);
+        sb.AppendLine();
+    }
+
+    private static void AppendViewSheetSummary(StringBuilder sb, ElementContextSnapshot snapshot)
+    {
+        sb.AppendLine("## View / Sheet Summary");
+
+        var viewContext = snapshot.ViewContext;
+        var sheetContext = snapshot.SheetContext;
+        if (viewContext is null && sheetContext is null)
+        {
+            sb.AppendLine("_Not available._");
+            sb.AppendLine();
+            return;
+        }
+
+        if (viewContext is not null)
+        {
+            var scaleSuffix = viewContext.Scale is null ? string.Empty : $", scale 1:{viewContext.Scale}";
+            sb.AppendLine($"View **{viewContext.ViewName}** ({viewContext.ViewType}){scaleSuffix}.");
+        }
+
+        if (sheetContext is not null)
+        {
+            var sheetLabel = sheetContext.SheetNumber is null ? sheetContext.SheetName : $"{sheetContext.SheetNumber} - {sheetContext.SheetName}";
+            var titleBlockSuffix = sheetContext.TitleBlockFamilyName is null ? string.Empty : $" (title block {sheetContext.TitleBlockFamilyName})";
+            sb.AppendLine($"Sheet **{sheetLabel}**{titleBlockSuffix}.");
+        }
+
         sb.AppendLine();
     }
 

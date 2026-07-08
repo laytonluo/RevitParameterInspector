@@ -37,6 +37,12 @@ public static class ExcelExporter
         AddFieldValueSheet(workbook, "Geometry", ObjectInspector.ToFieldRows(snapshot.Geometry));
         AddFieldValueSheet(workbook, "Location", ObjectInspector.ToFieldRows(snapshot.Location));
         AddFieldValueSheet(workbook, "Relationships", ObjectInspector.ToFieldRows(snapshot.Relationships));
+        AddFieldValueSheet(
+            workbook,
+            "View_Sheet_Context",
+            ObjectInspector.ToFieldRows(snapshot.ViewContext, "View")
+                .Concat(ObjectInspector.ToFieldRows(snapshot.SheetContext, "Sheet"))
+                .ToList());
         AddDictionarySheet(workbook, snapshot);
         AddRawMetadataSheet(workbook, snapshot);
 
