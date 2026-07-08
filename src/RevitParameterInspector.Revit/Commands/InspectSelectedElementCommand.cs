@@ -14,7 +14,7 @@ namespace RevitParameterInspector.Revit.Commands;
 /// Entry point external command implementing the selection workflow from HANDOFF Section 34:
 /// use the current selection if there is exactly one element, otherwise prompt to pick one.
 /// Shows the WPF inspector window (Summary/Parameters/Geometry/Location/Relationships/
-/// View-Sheet Context/Raw JSON). The Dictionary tab is not included in this step.
+/// View-Sheet Context/Dictionary/Raw JSON/AI Context).
 /// </summary>
 [Transaction(TransactionMode.ReadOnly)]
 [Regeneration(RegenerationOption.Manual)]

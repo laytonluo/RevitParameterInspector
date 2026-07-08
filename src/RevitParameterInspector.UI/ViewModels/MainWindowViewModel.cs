@@ -13,8 +13,8 @@ namespace RevitParameterInspector.UI.ViewModels;
 /// <summary>
 /// Backs <see cref="Views.MainWindow"/>. Presents a single, already-built
 /// <see cref="ElementContextSnapshot"/> across the Summary/Parameters/Geometry/Location/
-/// Relationships/View-Sheet Context/Raw JSON tabs, plus the Export JSON/Markdown/Excel and
-/// Copy AI Context actions. The Dictionary tab is not included in this step.
+/// Relationships/View-Sheet Context/Dictionary/Raw JSON/AI Context tabs, plus the Export
+/// JSON/Markdown/Excel and Copy AI Context actions.
 /// </summary>
 public sealed class MainWindowViewModel : INotifyPropertyChanged
 {
@@ -33,7 +33,10 @@ public sealed class MainWindowViewModel : INotifyPropertyChanged
     public IReadOnlyList<FieldRow> LocationRows { get; }
     public IReadOnlyList<FieldRow> RelationshipRows { get; }
     public IReadOnlyList<FieldRow> ViewSheetContextRows { get; }
+    public IReadOnlyList<DictionaryTermInfo> DictionaryTerms { get; }
+    public string UnresolvedDictionaryTermsText { get; }
     public string RawJson { get; }
+    public string AiContext { get; }
 
     public ObservableCollection<ParameterInfoRecord> FilteredParameters { get; } = new();
 
@@ -86,7 +89,12 @@ public sealed class MainWindowViewModel : INotifyPropertyChanged
         ViewSheetContextRows = ObjectInspector.ToFieldRows(snapshot.ViewContext, "View")
             .Concat(ObjectInspector.ToFieldRows(snapshot.SheetContext, "Sheet"))
             .ToList();
+        DictionaryTerms = snapshot.Dictionary;
+        UnresolvedDictionaryTermsText = snapshot.UnresolvedDictionaryTerms.Count == 0
+            ? "(none)"
+            : string.Join(", ", snapshot.UnresolvedDictionaryTerms);
         RawJson = JsonExporter.Serialize(snapshot);
+        AiContext = AiContextComposer.Build(snapshot);
 
         ApplyParameterFilter();
     }

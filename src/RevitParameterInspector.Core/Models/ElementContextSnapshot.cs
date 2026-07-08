@@ -23,6 +23,9 @@ public sealed class ElementContextSnapshot
     public SheetContextInfo? SheetContext { get; set; }
     public List<DictionaryTermInfo> Dictionary { get; set; } = new();
 
+    /// <summary>Distinct API names looked up during this build that had no dictionary mapping. See HANDOFF Section 29.</summary>
+    public List<string> UnresolvedDictionaryTerms { get; set; } = new();
+
     /// <summary>Escape hatch for raw/unprocessed API data that doesn't fit elsewhere yet.</summary>
     public Dictionary<string, string> Raw { get; set; } = new();
 

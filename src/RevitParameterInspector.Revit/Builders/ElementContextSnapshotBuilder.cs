@@ -53,6 +53,12 @@ public static class ElementContextSnapshotBuilder
             snapshot.Parameters.AddRange(typeParameters);
         }
 
+        if (resolver is not null)
+        {
+            snapshot.Dictionary.AddRange(resolver.ResolvedTerms);
+            snapshot.UnresolvedDictionaryTerms.AddRange(resolver.UnresolvedTerms.GetUnresolvedTerms());
+        }
+
         return snapshot;
     }
 }

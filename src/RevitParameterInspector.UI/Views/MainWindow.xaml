@@ -116,6 +116,35 @@
             </DataGrid>
         </TabItem>
 
+        <TabItem Header="Dictionary">
+            <DockPanel>
+                <StackPanel DockPanel.Dock="Bottom" Margin="0,6,0,0">
+                    <TextBlock Text="Unresolved Terms:" FontWeight="Bold" />
+                    <TextBox Text="{Binding UnresolvedDictionaryTermsText, Mode=OneWay}"
+                             IsReadOnly="True"
+                             TextWrapping="Wrap"
+                             Height="60"
+                             VerticalScrollBarVisibility="Auto" />
+                </StackPanel>
+                <DataGrid ItemsSource="{Binding DictionaryTerms}"
+                          AutoGenerateColumns="False"
+                          IsReadOnly="True"
+                          HeadersVisibility="Column"
+                          GridLinesVisibility="Horizontal"
+                          CanUserAddRows="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="API Name" Binding="{Binding ApiName}" Width="160" />
+                        <DataGridTextColumn Header="Localized Name" Binding="{Binding LocalizedName}" Width="120" />
+                        <DataGridTextColumn Header="Locale" Binding="{Binding Locale}" Width="70" />
+                        <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="110" />
+                        <DataGridTextColumn Header="Source" Binding="{Binding Source}" Width="90" />
+                        <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*" />
+                        <DataGridTextColumn Header="Notes" Binding="{Binding Notes}" Width="160" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+        </TabItem>
+
         <TabItem Header="Raw JSON">
             <DockPanel>
                 <Button DockPanel.Dock="Top"
@@ -125,6 +154,24 @@
                         Padding="8,2"
                         Click="OnCopyJsonClick" />
                 <TextBox Text="{Binding RawJson, Mode=OneWay}"
+                         IsReadOnly="True"
+                         FontFamily="Consolas"
+                         TextWrapping="NoWrap"
+                         AcceptsReturn="True"
+                         VerticalScrollBarVisibility="Auto"
+                         HorizontalScrollBarVisibility="Auto" />
+            </DockPanel>
+        </TabItem>
+
+        <TabItem Header="AI Context">
+            <DockPanel>
+                <Button DockPanel.Dock="Top"
+                        Content="Copy AI Context"
+                        HorizontalAlignment="Left"
+                        Margin="0,0,0,6"
+                        Padding="8,2"
+                        Click="OnCopyAiContextClick" />
+                <TextBox Text="{Binding AiContext, Mode=OneWay}"
                          IsReadOnly="True"
                          FontFamily="Consolas"
                          TextWrapping="NoWrap"
