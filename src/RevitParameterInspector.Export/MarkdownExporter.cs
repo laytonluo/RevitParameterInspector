@@ -9,8 +9,8 @@ namespace RevitParameterInspector.Export;
 
 /// <summary>
 /// Markdown export: the primary AI-readable human format. Sections that aren't implemented
-/// yet (View/Sheet Context, Dictionary) are shown with an explicit "not available" note
-/// rather than omitted silently or crashing. See HANDOFF Section 32.2.
+/// yet (Dictionary) are shown with an explicit "not available" note rather than omitted
+/// silently or crashing. See HANDOFF Section 32.2.
 /// </summary>
 public static class MarkdownExporter
 {
@@ -217,12 +217,57 @@ public static class MarkdownExporter
     private static void AppendViewSheetContext(StringBuilder sb, ElementContextSnapshot snapshot)
     {
         sb.AppendLine("## View / Sheet Context");
-        if (snapshot.ViewContext is null && snapshot.SheetContext is null)
+
+        var viewContext = snapshot.ViewContext;
+        var sheetContext = snapshot.SheetContext;
+        if (viewContext is null && sheetContext is null)
         {
-            sb.AppendLine("_Not implemented in this build._");
+            sb.AppendLine("_Not available._");
+            sb.AppendLine();
+            return;
         }
 
-        sb.AppendLine();
+        if (viewContext is not null)
+        {
+            sb.AppendLine("### View Context");
+            sb.AppendLine(MarkdownFormat.Bullet("View", viewContext.ViewName));
+            sb.AppendLine(MarkdownFormat.Bullet("View Type", viewContext.ViewType));
+            sb.AppendLine(MarkdownFormat.Bullet("Scale", viewContext.Scale?.ToString()));
+            sb.AppendLine(MarkdownFormat.Bullet(
+                "Crop Box Active / Visible",
+                $"{viewContext.CropBoxActive} / {viewContext.CropBoxVisible}"));
+            sb.AppendLine(MarkdownFormat.Bullet("Crop Box Min -> Max", $"{FormatPoint(viewContext.CropBoxMin)} -> {FormatPoint(viewContext.CropBoxMax)}"));
+            sb.AppendLine(MarkdownFormat.Bullet("View Template", viewContext.ViewTemplateName));
+            sb.AppendLine(MarkdownFormat.Bullet("Detail Level", viewContext.DetailLevel));
+            sb.AppendLine(MarkdownFormat.Bullet("Display Style", viewContext.DisplayStyle));
+            sb.AppendLine(MarkdownFormat.Bullet("Discipline", viewContext.Discipline.ToString()));
+            sb.AppendLine(MarkdownFormat.Bullet("Associated Level", viewContext.AssociatedLevelName));
+            sb.AppendLine();
+        }
+
+        if (sheetContext is not null)
+        {
+            sb.AppendLine("### Sheet Context");
+            sb.AppendLine(MarkdownFormat.Bullet(
+                "Sheet",
+                sheetContext.SheetNumber is null ? sheetContext.SheetName : $"{sheetContext.SheetNumber} - {sheetContext.SheetName}"));
+            sb.AppendLine(MarkdownFormat.Bullet(
+                "Title Block",
+                sheetContext.TitleBlockFamilyName is null ? null : $"{sheetContext.TitleBlockFamilyName} - {sheetContext.TitleBlockTypeName}"));
+            sb.AppendLine(MarkdownFormat.Bullet(
+                "Viewports",
+                sheetContext.ViewportIds.Count == 0 ? null : string.Join(", ", sheetContext.ViewportIds)));
+            sb.AppendLine(MarkdownFormat.Bullet(
+                "Placed Views",
+                sheetContext.PlacedViewIds.Count == 0 ? null : string.Join(", ", sheetContext.PlacedViewIds)));
+            sb.AppendLine(MarkdownFormat.Bullet(
+                "Schedule Instances",
+                sheetContext.ScheduleSheetInstanceIds.Count == 0 ? null : string.Join(", ", sheetContext.ScheduleSheetInstanceIds)));
+            sb.AppendLine(MarkdownFormat.Bullet(
+                "Revisions",
+                sheetContext.RevisionIds.Count == 0 ? null : string.Join(", ", sheetContext.RevisionIds)));
+            sb.AppendLine();
+        }
     }
 
     private static void AppendDictionaryNotes(StringBuilder sb, ElementContextSnapshot snapshot)
