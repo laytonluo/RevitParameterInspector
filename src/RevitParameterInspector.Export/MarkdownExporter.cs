@@ -273,9 +273,29 @@ public static class MarkdownExporter
     private static void AppendDictionaryNotes(StringBuilder sb, ElementContextSnapshot snapshot)
     {
         sb.AppendLine("## Dictionary Notes");
-        sb.AppendLine(snapshot.Dictionary.Count == 0
-            ? "_No dictionary is loaded in this build; all names above are raw Revit API names._"
-            : $"{snapshot.Dictionary.Count} dictionary terms resolved for this element.");
+
+        if (snapshot.Dictionary.Count == 0 && snapshot.UnresolvedDictionaryTerms.Count == 0)
+        {
+            sb.AppendLine("_No dictionary is loaded in this build; all names above are raw Revit API names._");
+            sb.AppendLine();
+            return;
+        }
+
+        foreach (var term in snapshot.Dictionary)
+        {
+            sb.AppendLine(MarkdownFormat.Bullet(
+                term.ApiName ?? term.TermKey ?? "?",
+                term.LocalizedName is null ? $"_(no translation, {term.Status})_" : $"{term.LocalizedName} ({term.Status})"));
+        }
+
+        if (snapshot.Dictionary.Count == 0)
+        {
+            sb.AppendLine("_No dictionary terms resolved for this element._");
+        }
+
+        sb.AppendLine(MarkdownFormat.Bullet(
+            "Unresolved Terms",
+            snapshot.UnresolvedDictionaryTerms.Count == 0 ? null : string.Join(", ", snapshot.UnresolvedDictionaryTerms)));
         sb.AppendLine();
     }
 

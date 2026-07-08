@@ -155,9 +155,28 @@ public static class AiContextComposer
     private static void AppendDictionaryNotes(StringBuilder sb, ElementContextSnapshot snapshot)
     {
         sb.AppendLine("## Dictionary Notes");
-        sb.AppendLine(snapshot.Dictionary.Count == 0
-            ? "_No dictionary is loaded in this build; names above are raw Revit API names._"
-            : $"{snapshot.Dictionary.Count} dictionary terms resolved.");
+
+        if (snapshot.Dictionary.Count == 0 && snapshot.UnresolvedDictionaryTerms.Count == 0)
+        {
+            sb.AppendLine("_No dictionary is loaded in this build; names above are raw Revit API names._");
+            return;
+        }
+
+        var resolved = snapshot.Dictionary.Where(term => term.LocalizedName is not null).ToList();
+        if (resolved.Count > 0)
+        {
+            var mappings = resolved.Select(term => $"{term.ApiName} -> {term.LocalizedName}");
+            sb.AppendLine($"{resolved.Count} term(s) resolved: {string.Join(", ", mappings)}.");
+        }
+        else
+        {
+            sb.AppendLine("_No dictionary terms resolved for this element._");
+        }
+
+        if (snapshot.UnresolvedDictionaryTerms.Count > 0)
+        {
+            sb.AppendLine($"{snapshot.UnresolvedDictionaryTerms.Count} term(s) had no mapping: {string.Join(", ", snapshot.UnresolvedDictionaryTerms)}.");
+        }
     }
 
     private static string? Round(double? value) => value?.ToString("0.###");

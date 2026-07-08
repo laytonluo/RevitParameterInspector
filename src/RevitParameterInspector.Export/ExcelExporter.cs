@@ -141,6 +141,20 @@ public static class ExcelExporter
             sheet.Cell(2, 1).Value = "No dictionary is loaded in this build; all names are raw Revit API names.";
         }
 
+        if (snapshot.UnresolvedDictionaryTerms.Count > 0)
+        {
+            rowIndex++;
+            sheet.Cell(rowIndex, 1).Value = "Unresolved Terms";
+            sheet.Cell(rowIndex, 1).Style.Font.Bold = true;
+            rowIndex++;
+
+            foreach (var term in snapshot.UnresolvedDictionaryTerms)
+            {
+                sheet.Cell(rowIndex, 1).Value = term;
+                rowIndex++;
+            }
+        }
+
         sheet.SheetView.FreezeRows(1);
         sheet.Columns().AdjustToContents();
     }
