@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
@@ -64,6 +65,13 @@ public static class ObjectInspector
             case IEnumerable enumerable:
                 var items = enumerable.Cast<object?>().Select(FormatScalar).ToList();
                 rows.Add(new FieldRow(name, items.Count == 0 ? string.Empty : string.Join(", ", items)));
+                break;
+
+            // Must come before the namespace-based nested-object check below: enums like
+            // Discipline/GeometryReadStatus live in this same namespace but have no public
+            // instance properties, so treating them as nested objects silently drops them.
+            case Enum enumValue:
+                rows.Add(new FieldRow(name, enumValue.ToString()));
                 break;
 
             default:
