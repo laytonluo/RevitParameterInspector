@@ -15,8 +15,9 @@ Items still open from `HANDOFF_RevitParameterInspector_V1_Full.md`'s V1 scope:
   `geometry_terms.json`, and `parameter_terms.json` are still empty placeholders
 - `install/addin` and `install/bundle` packaging (currently no `.addin` manifest or bundle is
   shipped; see the manual registration steps in `docs/getting-started.md`)
-- `docs/revit-version-support.md` and `docs/dictionary-contribution-guide.md` (the dictionary
-  contribution rules currently live in `CONTRIBUTING.md`)
+- Filling in the dictionary content gaps tracked in `docs/dictionary-contribution-guide.md`
+  (most `BuiltInCategory`/`BuiltInParameter` mappings and about two-thirds of HANDOFF's initial
+  zh-TW seed term list)
 - Verification against a real Revit installation - none of the `RevitParameterInspector.Revit`
   code (builders, readers, the external command) has been exercised inside a running Revit
   instance yet

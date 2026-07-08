@@ -72,12 +72,21 @@ This is under active development against the HANDOFF spec. Current state:
       `builtin_parameters_common.json`, `family_terms.json`, `geometry_terms.json`,
       `parameter_terms.json` are still empty placeholders)
 
+### Documentation (`docs/`)
+- [x] getting-started, build-guide, roadmap, revit-version-support,
+      ai-json-schema, markdown-export-format, excel-export-format,
+      dictionary-contribution-guide
+
+### Samples (`samples/`)
+- [x] One representative example (a Viewport on a sheet) exercising every section, in
+      `samples/json`, `samples/markdown`, and `samples/excel`
+
 ### Not started
-- `docs/` (getting-started, build guide, export format docs, roadmap)
-- `samples/json`, `samples/markdown`, `samples/excel` (example exports)
-- `install/addin`, `install/bundle` (.addin manifest, packaged install bundle)
+- `install/addin`, `install/bundle` (.addin manifest, packaged install bundle - see
+  `docs/getting-started.md` for the current manual registration steps)
 - Verification against a real Revit installation (not available in the environment this was
-  built in - Revit API references resolve but haven't been exercised inside Revit itself)
+  built in - Revit API references resolve but haven't been exercised inside Revit itself; see
+  `docs/revit-version-support.md`)
 
 ## License
 
