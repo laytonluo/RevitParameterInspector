@@ -1,0 +1,63 @@
+[
+  {
+    "termKey": "Element",
+    "apiName": "Element",
+    "localizedName": "元件",
+    "locale": "zh-TW",
+    "description": "General Revit element",
+    "keywords": ["element", "元件"],
+    "category": "ApiTerm",
+    "priority": 100,
+    "status": "Reviewed",
+    "source": "BuiltIn",
+    "notes": "Example entry for the Step 5 Dictionary Engine skeleton; not a complete dictionary yet."
+  },
+  {
+    "termKey": "Category",
+    "apiName": "Category",
+    "localizedName": "類別",
+    "locale": "zh-TW",
+    "description": "Revit category",
+    "keywords": ["category", "類別"],
+    "category": "ApiTerm",
+    "priority": 100,
+    "status": "Reviewed",
+    "source": "BuiltIn"
+  },
+  {
+    "termKey": "Document",
+    "apiName": "Document",
+    "localizedName": "專案文件",
+    "locale": "zh-TW",
+    "description": "RVT/RFA document",
+    "keywords": ["document", "專案文件"],
+    "category": "ApiTerm",
+    "priority": 100,
+    "status": "Reviewed",
+    "source": "BuiltIn"
+  },
+  {
+    "termKey": "Parameter",
+    "apiName": "Parameter",
+    "localizedName": "參數",
+    "locale": "zh-TW",
+    "description": "Element parameter",
+    "keywords": ["parameter", "參數"],
+    "category": "ApiTerm",
+    "priority": 100,
+    "status": "Reviewed",
+    "source": "BuiltIn"
+  },
+  {
+    "termKey": "Family",
+    "apiName": "Family",
+    "localizedName": "族群",
+    "locale": "zh-TW",
+    "description": "Revit Family",
+    "keywords": ["family", "族群"],
+    "category": "ApiTerm",
+    "priority": 100,
+    "status": "Reviewed",
+    "source": "BuiltIn"
+  }
+]

@@ -1,0 +1,39 @@
+[
+  {
+    "termKey": "ViewSheet",
+    "apiName": "ViewSheet",
+    "localizedName": "圖紙",
+    "locale": "zh-TW",
+    "description": "Sheet container",
+    "keywords": ["sheet", "圖紙"],
+    "category": "ViewSheetTerm",
+    "priority": 100,
+    "status": "Reviewed",
+    "source": "BuiltIn",
+    "notes": "Example entry for the Step 5 Dictionary Engine skeleton; not a complete dictionary yet."
+  },
+  {
+    "termKey": "Viewport",
+    "apiName": "Viewport",
+    "localizedName": "視埠",
+    "locale": "zh-TW",
+    "description": "Taiwan CAD/BIM usage",
+    "keywords": ["viewport", "視埠"],
+    "category": "ViewSheetTerm",
+    "priority": 100,
+    "status": "Reviewed",
+    "source": "BuiltIn"
+  },
+  {
+    "termKey": "TitleBlock",
+    "apiName": "TitleBlock",
+    "localizedName": "圖框",
+    "locale": "zh-TW",
+    "description": "Sheet title block",
+    "keywords": ["title block", "圖框"],
+    "category": "ViewSheetTerm",
+    "priority": 100,
+    "status": "Reviewed",
+    "source": "BuiltIn"
+  }
+]
