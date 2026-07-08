@@ -102,6 +102,20 @@
             </DataGrid>
         </TabItem>
 
+        <TabItem Header="View / Sheet Context">
+            <DataGrid ItemsSource="{Binding ViewSheetContextRows}"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      HeadersVisibility="Column"
+                      GridLinesVisibility="Horizontal"
+                      CanUserAddRows="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Field" Binding="{Binding Field}" Width="220" />
+                    <DataGridTextColumn Header="Value" Binding="{Binding Value}" Width="*" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </TabItem>
+
         <TabItem Header="Raw JSON">
             <DockPanel>
                 <Button DockPanel.Dock="Top"

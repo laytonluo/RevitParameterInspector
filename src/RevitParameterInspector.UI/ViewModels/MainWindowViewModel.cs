@@ -13,8 +13,8 @@ namespace RevitParameterInspector.UI.ViewModels;
 /// <summary>
 /// Backs <see cref="Views.MainWindow"/>. Presents a single, already-built
 /// <see cref="ElementContextSnapshot"/> across the Summary/Parameters/Geometry/Location/
-/// Relationships/Raw JSON tabs, plus the Export JSON/Markdown/Excel and Copy AI Context
-/// actions. Dictionary and View/Sheet Context tabs are not included in this step.
+/// Relationships/View-Sheet Context/Raw JSON tabs, plus the Export JSON/Markdown/Excel and
+/// Copy AI Context actions. The Dictionary tab is not included in this step.
 /// </summary>
 public sealed class MainWindowViewModel : INotifyPropertyChanged
 {
@@ -32,6 +32,7 @@ public sealed class MainWindowViewModel : INotifyPropertyChanged
     public IReadOnlyList<FieldRow> GeometryRows { get; }
     public IReadOnlyList<FieldRow> LocationRows { get; }
     public IReadOnlyList<FieldRow> RelationshipRows { get; }
+    public IReadOnlyList<FieldRow> ViewSheetContextRows { get; }
     public string RawJson { get; }
 
     public ObservableCollection<ParameterInfoRecord> FilteredParameters { get; } = new();
@@ -82,6 +83,9 @@ public sealed class MainWindowViewModel : INotifyPropertyChanged
         GeometryRows = ObjectInspector.ToFieldRows(snapshot.Geometry);
         LocationRows = ObjectInspector.ToFieldRows(snapshot.Location);
         RelationshipRows = ObjectInspector.ToFieldRows(snapshot.Relationships);
+        ViewSheetContextRows = ObjectInspector.ToFieldRows(snapshot.ViewContext, "View")
+            .Concat(ObjectInspector.ToFieldRows(snapshot.SheetContext, "Sheet"))
+            .ToList();
         RawJson = JsonExporter.Serialize(snapshot);
 
         ApplyParameterFilter();
