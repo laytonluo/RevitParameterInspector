@@ -30,7 +30,7 @@ public sealed class SelectionReader
             var reference = uiDocument.Selection.PickObject(ObjectType.Element, "Select an element to inspect");
             return reference is null ? null : uiDocument.Document.GetElement(reference);
         }
-        catch (OperationCanceledException)
+        catch (Autodesk.Revit.Exceptions.OperationCanceledException)
         {
             return null;
         }
