@@ -54,7 +54,7 @@ public static class IdentityInfoBuilder
 
         if (info.BuiltInCategory is not null)
         {
-            var categoryTerm = resolver.Resolve(info.BuiltInCategory);
+            var categoryTerm = resolver.Resolve(info.BuiltInCategory, DictionaryTermCategory.BuiltInCategory);
             info.BuiltInCategoryLocalized = categoryTerm.LocalizedName;
             info.BuiltInCategoryDescription = categoryTerm.Description;
             info.BuiltInCategoryDictionaryStatus = categoryTerm.Status;

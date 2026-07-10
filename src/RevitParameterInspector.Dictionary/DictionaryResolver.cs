@@ -32,7 +32,7 @@ public sealed class DictionaryResolver
         UnresolvedTerms = unresolvedTermCollector ?? new UnresolvedTermCollector();
     }
 
-    public DictionaryTermInfo Resolve(string apiName)
+    public DictionaryTermInfo Resolve(string apiName, DictionaryTermCategory category = DictionaryTermCategory.ApiTerm)
     {
         if (!string.IsNullOrWhiteSpace(apiName) && _termsByApiName.TryGetValue(apiName, out var term))
         {
@@ -44,7 +44,7 @@ public sealed class DictionaryResolver
             return term;
         }
 
-        UnresolvedTerms.Record(apiName);
+        UnresolvedTerms.Record(apiName, category);
         return new DictionaryTermInfo
         {
             ApiName = apiName,

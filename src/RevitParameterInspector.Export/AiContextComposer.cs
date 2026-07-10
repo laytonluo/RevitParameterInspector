@@ -53,7 +53,9 @@ public static class AiContextComposer
 
         foreach (var parameter in writable.Take(MaxWritableParametersListed))
         {
-            sb.AppendLine($"- **{parameter.Name}** = {parameter.ValueDisplay} ({parameter.Scope}, {parameter.StorageType})");
+            // LocalizedName is what Revit's UI shows; Name (the raw enum string) is null for
+            // user-created parameters, so prefer the display name here.
+            sb.AppendLine($"- **{parameter.LocalizedName ?? parameter.Name}** = {parameter.ValueDisplay} ({parameter.Scope}, {parameter.StorageType})");
         }
 
         if (writable.Count > MaxWritableParametersListed)
@@ -115,14 +117,32 @@ public static class AiContextComposer
 
     private static void AppendViewSheetSummary(StringBuilder sb, ElementContextSnapshot snapshot)
     {
-        sb.AppendLine("## View / Sheet Summary");
+        sb.AppendLine("## View / Sheet Context");
+
+        if (snapshot.ViewSheetContexts.Count > 0)
+        {
+            sb.AppendLine("| Context Type | Name | ElementId |");
+            sb.AppendLine("|---|---|---|");
+            foreach (var context in snapshot.ViewSheetContexts)
+            {
+                sb.AppendLine(
+                    $"| {MarkdownFormat.EscapeCell(context.ContextType)} | {MarkdownFormat.EscapeCell(context.Name)} | " +
+                    $"{MarkdownFormat.EscapeCell(context.ElementId)} |");
+            }
+
+            sb.AppendLine();
+        }
 
         var viewContext = snapshot.ViewContext;
         var sheetContext = snapshot.SheetContext;
         if (viewContext is null && sheetContext is null)
         {
-            sb.AppendLine("_Not available._");
-            sb.AppendLine();
+            if (snapshot.ViewSheetContexts.Count == 0)
+            {
+                sb.AppendLine("No View / Sheet context found.");
+                sb.AppendLine();
+            }
+
             return;
         }
 
@@ -175,7 +195,8 @@ public static class AiContextComposer
 
         if (snapshot.UnresolvedDictionaryTerms.Count > 0)
         {
-            sb.AppendLine($"{snapshot.UnresolvedDictionaryTerms.Count} term(s) had no mapping: {string.Join(", ", snapshot.UnresolvedDictionaryTerms)}.");
+            var unresolvedNames = snapshot.UnresolvedDictionaryTerms.Select(term => term.Term);
+            sb.AppendLine($"{snapshot.UnresolvedDictionaryTerms.Count} term(s) had no mapping: {string.Join(", ", unresolvedNames)}.");
         }
     }
 

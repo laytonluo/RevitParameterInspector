@@ -88,7 +88,11 @@ public static class ParameterReader
 
         var record = new CoreModels.ParameterInfoRecord
         {
-            Name = definition?.Name,
+            // Name is the stable raw API identifier (BuiltInParameter enum string); user-created
+            // Shared/Project/Family parameters have no such identifier, so Name stays null for
+            // them. LocalizedName is what Revit's own UI shows (Definition.Name).
+            Name = isBuiltIn ? builtInParameter.ToString() : null,
+            LocalizedName = definition?.Name,
             ApiPath = apiPath,
             Scope = scope,
             ParameterKind = kind,
@@ -113,11 +117,11 @@ public static class ParameterReader
         };
 
         // Only BuiltInParameter is a stable, locale-independent API identifier worth looking up;
-        // Shared/Project/Family parameters are user-created and must never be translated (HANDOFF Section 5.4).
+        // Shared/Project/Family parameters are user-created and must never be translated (HANDOFF
+        // Section 5.4). The dictionary never overwrites LocalizedName - that stays Definition.Name.
         if (resolver is not null && isBuiltIn)
         {
-            var term = resolver.Resolve(record.BuiltInParameter!);
-            record.LocalizedName = term.LocalizedName;
+            var term = resolver.Resolve(record.BuiltInParameter!, CoreModels.DictionaryTermCategory.BuiltInParameter);
             record.Description = term.Description;
             record.Keywords = term.Keywords;
             record.DictionaryStatus = term.Status;

@@ -17,7 +17,11 @@ public static class ElementContextSnapshotBuilder
     /// Optional Dictionary Engine resolver (HANDOFF Section 20). When null, the snapshot is
     /// still fully built with raw API names only (HANDOFF Section 5.2).
     /// </param>
-    public static CoreModels.ElementContextSnapshot Build(Element element, DictionaryResolver? resolver = null)
+    /// <param name="activeView">
+    /// The active view at inspection time, used by <see cref="ViewSheetContextReader"/> so the
+    /// View / Sheet Context page always has at least the active view for any element.
+    /// </param>
+    public static CoreModels.ElementContextSnapshot Build(Element element, DictionaryResolver? resolver = null, View? activeView = null)
     {
         var document = element.Document;
         var application = document.Application;
@@ -43,6 +47,7 @@ public static class ElementContextSnapshotBuilder
             Relationships = RelationshipInfoBuilder.Build(element),
             ViewContext = ViewContextInfoBuilder.Build(element),
             SheetContext = SheetContextInfoBuilder.Build(element),
+            ViewSheetContexts = ViewSheetContextReader.Read(document, activeView, element),
         };
 
         snapshot.Parameters.AddRange(ParameterReader.ReadInstanceParameters(element, resolver));

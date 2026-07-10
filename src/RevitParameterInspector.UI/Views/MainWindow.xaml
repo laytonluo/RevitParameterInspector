@@ -5,12 +5,24 @@
         Width="900" Height="650"
         WindowStartupLocation="CenterOwner">
     <DockPanel Margin="8">
-        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,8,0,0">
-            <Button Content="Export JSON" Padding="10,4" Margin="0,0,8,0" Click="OnExportJsonClick" />
-            <Button Content="Export Markdown" Padding="10,4" Margin="0,0,8,0" Click="OnExportMarkdownClick" />
-            <Button Content="Export Excel" Padding="10,4" Margin="0,0,8,0" Click="OnExportExcelClick" />
-            <Button Content="Copy AI Context" Padding="10,4" Click="OnCopyAiContextClick" />
-        </StackPanel>
+        <DockPanel DockPanel.Dock="Bottom" Margin="0,8,0,0" LastChildFill="False">
+            <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
+                <Button Content="Reselect" Padding="10,4" Click="OnReselectClick" />
+                <TextBlock Text="{Binding StatusMessage}"
+                           VerticalAlignment="Center"
+                           Margin="10,0,0,0"
+                           Foreground="Gray"
+                           TextTrimming="CharacterEllipsis"
+                           MaxWidth="330" />
+            </StackPanel>
+            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                <Button Content="Export JSON" Padding="10,4" Margin="0,0,8,0" Click="OnExportJsonClick" />
+                <Button Content="Export Markdown" Padding="10,4" Margin="0,0,8,0" Click="OnExportMarkdownClick" />
+                <Button Content="Export Excel" Padding="10,4" Margin="0,0,8,0" Click="OnExportExcelClick" />
+                <Button Content="Copy AI Context" Padding="10,4" Margin="0,0,8,0" Click="OnCopyAiContextClick" />
+                <Button Content="Copy JSON" Padding="10,4" Click="OnCopyJsonClick" />
+            </StackPanel>
+        </DockPanel>
 
         <TabControl>
 
@@ -22,6 +34,14 @@
                       GridLinesVisibility="Horizontal"
                       CanUserAddRows="False">
                 <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Export" Width="60">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}"
+                                          HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTextColumn Header="Field" Binding="{Binding Field}" Width="220" />
                     <DataGridTextColumn Header="Value" Binding="{Binding Value}" Width="*" />
                 </DataGrid.Columns>
@@ -43,18 +63,26 @@
                           GridLinesVisibility="Horizontal"
                           CanUserAddRows="False">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="160" />
-                        <DataGridTextColumn Header="Localized Name" Binding="{Binding LocalizedName}" Width="120" />
-                        <DataGridTextColumn Header="Scope" Binding="{Binding Scope}" Width="70" />
-                        <DataGridTextColumn Header="Value" Binding="{Binding ValueDisplay}" Width="140" />
-                        <DataGridTextColumn Header="Raw Value" Binding="{Binding ValueRaw}" Width="100" />
-                        <DataGridTextColumn Header="Storage Type" Binding="{Binding StorageType}" Width="90" />
-                        <DataGridTextColumn Header="Built-in Parameter" Binding="{Binding BuiltInParameter}" Width="160" />
-                        <DataGridTextColumn Header="Kind" Binding="{Binding ParameterKind}" Width="100" />
-                        <DataGridTextColumn Header="Read Only" Binding="{Binding IsReadOnly}" Width="70" />
-                        <DataGridTextColumn Header="Has Value" Binding="{Binding HasValue}" Width="70" />
-                        <DataGridTextColumn Header="API Path" Binding="{Binding ApiPath}" Width="160" />
-                        <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*" />
+                        <DataGridTemplateColumn Header="Export" Width="60">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}"
+                                              HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Record.Name}" Width="160" />
+                        <DataGridTextColumn Header="Localized Name" Binding="{Binding Record.LocalizedName}" Width="120" />
+                        <DataGridTextColumn Header="Scope" Binding="{Binding Record.Scope}" Width="70" />
+                        <DataGridTextColumn Header="Value" Binding="{Binding Record.ValueDisplay}" Width="140" />
+                        <DataGridTextColumn Header="Raw Value" Binding="{Binding Record.ValueRaw}" Width="100" />
+                        <DataGridTextColumn Header="Storage Type" Binding="{Binding Record.StorageType}" Width="90" />
+                        <DataGridTextColumn Header="Built-in Parameter" Binding="{Binding Record.BuiltInParameter}" Width="160" />
+                        <DataGridTextColumn Header="Kind" Binding="{Binding Record.ParameterKind}" Width="100" />
+                        <DataGridTextColumn Header="Read Only" Binding="{Binding Record.IsReadOnly}" Width="70" />
+                        <DataGridTextColumn Header="Has Value" Binding="{Binding Record.HasValue}" Width="70" />
+                        <DataGridTextColumn Header="API Path" Binding="{Binding Record.ApiPath}" Width="160" />
+                        <DataGridTextColumn Header="Description" Binding="{Binding Record.Description}" Width="*" />
                     </DataGrid.Columns>
                 </DataGrid>
             </DockPanel>
@@ -68,6 +96,14 @@
                       GridLinesVisibility="Horizontal"
                       CanUserAddRows="False">
                 <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Export" Width="60">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}"
+                                          HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTextColumn Header="Field" Binding="{Binding Field}" Width="220" />
                     <DataGridTextColumn Header="Value" Binding="{Binding Value}" Width="*" />
                 </DataGrid.Columns>
@@ -82,6 +118,14 @@
                       GridLinesVisibility="Horizontal"
                       CanUserAddRows="False">
                 <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Export" Width="60">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}"
+                                          HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTextColumn Header="Field" Binding="{Binding Field}" Width="220" />
                     <DataGridTextColumn Header="Value" Binding="{Binding Value}" Width="*" />
                 </DataGrid.Columns>
@@ -96,6 +140,14 @@
                       GridLinesVisibility="Horizontal"
                       CanUserAddRows="False">
                 <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Export" Width="60">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}"
+                                          HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTextColumn Header="Field" Binding="{Binding Field}" Width="220" />
                     <DataGridTextColumn Header="Value" Binding="{Binding Value}" Width="*" />
                 </DataGrid.Columns>
@@ -103,27 +155,64 @@
         </TabItem>
 
         <TabItem Header="View / Sheet Context">
-            <DataGrid ItemsSource="{Binding ViewSheetContextRows}"
-                      AutoGenerateColumns="False"
-                      IsReadOnly="True"
-                      HeadersVisibility="Column"
-                      GridLinesVisibility="Horizontal"
-                      CanUserAddRows="False">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Field" Binding="{Binding Field}" Width="220" />
-                    <DataGridTextColumn Header="Value" Binding="{Binding Value}" Width="*" />
-                </DataGrid.Columns>
-            </DataGrid>
+            <DockPanel>
+                <TextBlock DockPanel.Dock="Bottom"
+                           Text="No View / Sheet context found."
+                           Margin="0,6,0,0"
+                           Foreground="Gray">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ViewSheetContextRows.Count}" Value="0">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+                <DataGrid ItemsSource="{Binding ViewSheetContextRows}"
+                          AutoGenerateColumns="False"
+                          IsReadOnly="True"
+                          HeadersVisibility="Column"
+                          GridLinesVisibility="Horizontal"
+                          CanUserAddRows="False">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="Export" Width="60">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}"
+                                              HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="Context Type" Binding="{Binding ContextType}" Width="120" />
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="280" />
+                        <DataGridTextColumn Header="ElementId" Binding="{Binding ElementId}" Width="110" />
+                        <DataGridTextColumn Header="Additional Info" Binding="{Binding AdditionalInfo}" Width="*" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
         </TabItem>
 
         <TabItem Header="Dictionary">
             <DockPanel>
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,6">
+                    <TextBlock Text="{Binding DictionaryCountsText}" VerticalAlignment="Center" FontWeight="Bold" />
+                </StackPanel>
                 <StackPanel DockPanel.Dock="Bottom" Margin="0,6,0,0">
-                    <TextBlock Text="Unresolved Terms:" FontWeight="Bold" />
+                    <DockPanel Margin="0,0,0,2" LastChildFill="False">
+                        <TextBlock DockPanel.Dock="Left" Text="Unresolved Terms:" FontWeight="Bold" VerticalAlignment="Center" />
+                        <Button DockPanel.Dock="Right"
+                                Content="Copy Unresolved Terms"
+                                Padding="8,2"
+                                Click="OnCopyUnresolvedTermsClick" />
+                    </DockPanel>
                     <TextBox Text="{Binding UnresolvedDictionaryTermsText, Mode=OneWay}"
                              IsReadOnly="True"
                              TextWrapping="Wrap"
-                             Height="60"
+                             Height="90"
+                             FontFamily="Consolas"
                              VerticalScrollBarVisibility="Auto" />
                 </StackPanel>
                 <DataGrid ItemsSource="{Binding DictionaryTerms}"
@@ -135,6 +224,7 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="API Name" Binding="{Binding ApiName}" Width="160" />
                         <DataGridTextColumn Header="Localized Name" Binding="{Binding LocalizedName}" Width="120" />
+                        <DataGridTextColumn Header="Category" Binding="{Binding Category}" Width="100" />
                         <DataGridTextColumn Header="Locale" Binding="{Binding Locale}" Width="70" />
                         <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="110" />
                         <DataGridTextColumn Header="Source" Binding="{Binding Source}" Width="90" />
@@ -145,40 +235,58 @@
             </DockPanel>
         </TabItem>
 
-        <TabItem Header="Raw JSON">
-            <DockPanel>
-                <Button DockPanel.Dock="Top"
-                        Content="Copy JSON"
-                        HorizontalAlignment="Left"
-                        Margin="0,0,0,6"
-                        Padding="8,2"
-                        Click="OnCopyJsonClick" />
-                <TextBox Text="{Binding RawJson, Mode=OneWay}"
-                         IsReadOnly="True"
-                         FontFamily="Consolas"
-                         TextWrapping="NoWrap"
-                         AcceptsReturn="True"
-                         VerticalScrollBarVisibility="Auto"
-                         HorizontalScrollBarVisibility="Auto" />
-            </DockPanel>
+        <TabItem Header="AI Context">
+            <TextBox Text="{Binding AiContext, Mode=OneWay}"
+                     IsReadOnly="True"
+                     FontFamily="Consolas"
+                     TextWrapping="NoWrap"
+                     AcceptsReturn="True"
+                     VerticalScrollBarVisibility="Auto"
+                     HorizontalScrollBarVisibility="Auto" />
         </TabItem>
 
-        <TabItem Header="AI Context">
-            <DockPanel>
-                <Button DockPanel.Dock="Top"
-                        Content="Copy AI Context"
-                        HorizontalAlignment="Left"
-                        Margin="0,0,0,6"
-                        Padding="8,2"
-                        Click="OnCopyAiContextClick" />
-                <TextBox Text="{Binding AiContext, Mode=OneWay}"
-                         IsReadOnly="True"
-                         FontFamily="Consolas"
-                         TextWrapping="NoWrap"
-                         AcceptsReturn="True"
-                         VerticalScrollBarVisibility="Auto"
-                         HorizontalScrollBarVisibility="Auto" />
-            </DockPanel>
+        <TabItem Header="About Me">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="24" MaxWidth="620" HorizontalAlignment="Left">
+                    <TextBlock Text="RevitParameterInspector" FontSize="22" FontWeight="Bold" />
+
+                    <TextBlock Text="Created by" Margin="0,18,0,0" Foreground="Gray" />
+                    <TextBlock Text="Layton Luo" FontSize="16" FontWeight="SemiBold" />
+
+                    <TextBlock Margin="0,14,0,0"
+                               TextWrapping="Wrap"
+                               Text="Open-source Revit element context inspector for developers, AI-assisted workflows, and BIM automation." />
+
+                    <TextBlock Text="GitHub" Margin="0,18,0,0" FontWeight="SemiBold" />
+                    <TextBlock>
+                        <Hyperlink NavigateUri="https://github.com/laytonluo"
+                                   RequestNavigate="OnHyperlinkNavigate">https://github.com/laytonluo</Hyperlink>
+                    </TextBlock>
+
+                    <TextBlock Text="LinkedIn" Margin="0,10,0,0" FontWeight="SemiBold" />
+                    <TextBlock>
+                        <Hyperlink NavigateUri="https://www.linkedin.com/in/layton-luo-55228a253"
+                                   RequestNavigate="OnHyperlinkNavigate">https://www.linkedin.com/in/layton-luo-55228a253</Hyperlink>
+                    </TextBlock>
+
+                    <TextBlock Text="Facebook Fans Page" Margin="0,10,0,0" FontWeight="SemiBold" />
+                    <TextBlock>
+                        <Hyperlink NavigateUri="https://www.facebook.com/profile.php?id=61560198794512&amp;locale=zh_TW"
+                                   RequestNavigate="OnHyperlinkNavigate">https://www.facebook.com/profile.php?id=61560198794512&amp;locale=zh_TW</Hyperlink>
+                    </TextBlock>
+
+                    <TextBlock Text="YouTube" Margin="0,10,0,0" FontWeight="SemiBold" />
+                    <TextBlock>
+                        <Hyperlink NavigateUri="https://www.youtube.com/@BIMANIA-vs8jp"
+                                   RequestNavigate="OnHyperlinkNavigate">https://www.youtube.com/@BIMANIA-vs8jp</Hyperlink>
+                    </TextBlock>
+
+                    <TextBlock Margin="0,22,0,0"
+                               TextWrapping="Wrap"
+                               Foreground="Gray"
+                               Text="Thank you for supporting RevitParameterInspector. Community contributions, bug reports, dictionary improvements, and feature suggestions are welcome." />
+                </StackPanel>
+            </ScrollViewer>
         </TabItem>
 
         </TabControl>

@@ -218,12 +218,30 @@ public static class MarkdownExporter
     {
         sb.AppendLine("## View / Sheet Context");
 
+        if (snapshot.ViewSheetContexts.Count > 0)
+        {
+            sb.AppendLine("| Context Type | Name | ElementId |");
+            sb.AppendLine("|---|---|---|");
+            foreach (var context in snapshot.ViewSheetContexts)
+            {
+                sb.AppendLine(
+                    $"| {MarkdownFormat.EscapeCell(context.ContextType)} | {MarkdownFormat.EscapeCell(context.Name)} | " +
+                    $"{MarkdownFormat.EscapeCell(context.ElementId)} |");
+            }
+
+            sb.AppendLine();
+        }
+
         var viewContext = snapshot.ViewContext;
         var sheetContext = snapshot.SheetContext;
         if (viewContext is null && sheetContext is null)
         {
-            sb.AppendLine("_Not available._");
-            sb.AppendLine();
+            if (snapshot.ViewSheetContexts.Count == 0)
+            {
+                sb.AppendLine("No View / Sheet context found.");
+                sb.AppendLine();
+            }
+
             return;
         }
 
@@ -295,7 +313,9 @@ public static class MarkdownExporter
 
         sb.AppendLine(MarkdownFormat.Bullet(
             "Unresolved Terms",
-            snapshot.UnresolvedDictionaryTerms.Count == 0 ? null : string.Join(", ", snapshot.UnresolvedDictionaryTerms)));
+            snapshot.UnresolvedDictionaryTerms.Count == 0
+                ? null
+                : string.Join(", ", snapshot.UnresolvedDictionaryTerms.Select(term => term.Term))));
         sb.AppendLine();
     }
 

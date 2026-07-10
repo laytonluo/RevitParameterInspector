@@ -22,6 +22,23 @@ public sealed class SelectionReader
             .ToList()!;
     }
 
+    /// <summary>
+    /// Resolves the element to inspect for the Reselect workflow
+    /// (HANDOFF_Update_Reload_CurrentContext_V1 Section 7): the first currently selected
+    /// element wins; with no selection the active view is used. Returns (null, false) when
+    /// neither is available.
+    /// </summary>
+    public (Element? Element, bool FromActiveView) GetFirstSelectedOrActiveView(UIDocument uiDocument)
+    {
+        var selected = GetCurrentSelection(uiDocument);
+        if (selected.Count > 0)
+        {
+            return (selected[0], false);
+        }
+
+        return (uiDocument.ActiveView, true);
+    }
+
     /// <summary>Prompts the user to pick one element. Returns null if the user cancels.</summary>
     public Element? PickSingleElement(UIDocument uiDocument)
     {

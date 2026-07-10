@@ -37,12 +37,7 @@ public static class ExcelExporter
         AddFieldValueSheet(workbook, "Geometry", ObjectInspector.ToFieldRows(snapshot.Geometry));
         AddFieldValueSheet(workbook, "Location", ObjectInspector.ToFieldRows(snapshot.Location));
         AddFieldValueSheet(workbook, "Relationships", ObjectInspector.ToFieldRows(snapshot.Relationships));
-        AddFieldValueSheet(
-            workbook,
-            "View_Sheet_Context",
-            ObjectInspector.ToFieldRows(snapshot.ViewContext, "View")
-                .Concat(ObjectInspector.ToFieldRows(snapshot.SheetContext, "Sheet"))
-                .ToList());
+        AddViewSheetContextSheet(workbook, snapshot);
         AddDictionarySheet(workbook, snapshot);
         AddRawMetadataSheet(workbook, snapshot);
 
@@ -117,6 +112,31 @@ public static class ExcelExporter
         sheet.Columns().AdjustToContents();
     }
 
+    private static void AddViewSheetContextSheet(XLWorkbook workbook, ElementContextSnapshot snapshot)
+    {
+        var sheet = workbook.Worksheets.Add("ViewSheet_Context");
+        WriteHeader(sheet, "ContextType", "Name", "ElementId", "UniqueId", "AdditionalInfo");
+
+        var rowIndex = 2;
+        foreach (var context in snapshot.ViewSheetContexts)
+        {
+            sheet.Cell(rowIndex, 1).Value = context.ContextType ?? string.Empty;
+            sheet.Cell(rowIndex, 2).Value = context.Name ?? string.Empty;
+            sheet.Cell(rowIndex, 3).Value = context.ElementId ?? string.Empty;
+            sheet.Cell(rowIndex, 4).Value = context.UniqueId ?? string.Empty;
+            sheet.Cell(rowIndex, 5).Value = context.AdditionalInfo ?? string.Empty;
+            rowIndex++;
+        }
+
+        if (snapshot.ViewSheetContexts.Count == 0)
+        {
+            sheet.Cell(2, 1).Value = "No View / Sheet context found.";
+        }
+
+        sheet.SheetView.FreezeRows(1);
+        sheet.Columns().AdjustToContents();
+    }
+
     private static void AddDictionarySheet(XLWorkbook workbook, ElementContextSnapshot snapshot)
     {
         var sheet = workbook.Worksheets.Add("Dictionary");
@@ -146,11 +166,14 @@ public static class ExcelExporter
             rowIndex++;
             sheet.Cell(rowIndex, 1).Value = "Unresolved Terms";
             sheet.Cell(rowIndex, 1).Style.Font.Bold = true;
+            sheet.Cell(rowIndex, 2).Value = "Category";
+            sheet.Cell(rowIndex, 2).Style.Font.Bold = true;
             rowIndex++;
 
             foreach (var term in snapshot.UnresolvedDictionaryTerms)
             {
-                sheet.Cell(rowIndex, 1).Value = term;
+                sheet.Cell(rowIndex, 1).Value = term.Term ?? string.Empty;
+                sheet.Cell(rowIndex, 2).Value = term.Category.ToString();
                 rowIndex++;
             }
         }
