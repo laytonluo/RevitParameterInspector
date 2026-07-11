@@ -281,6 +281,22 @@
                                    RequestNavigate="OnHyperlinkNavigate">https://www.youtube.com/@BIMANIA-vs8jp</Hyperlink>
                     </TextBlock>
 
+                    <TextBlock Text="Community Resources" Margin="0,26,0,0" FontSize="16" FontWeight="Bold" />
+
+                    <TextBlock Text="Taiwan BIM MCP Community（台灣 BIM MCP 社群）" Margin="0,14,0,0" FontWeight="SemiBold" TextWrapping="Wrap" />
+                    <TextBlock TextWrapping="Wrap" Text="Taiwan's leading BIM + MCP knowledge-sharing community." />
+                    <TextBlock>
+                        <Hyperlink NavigateUri="https://shuotao.github.io/REVIT_MCP_study/docs/BIM_MCP/index.html"
+                                   RequestNavigate="OnHyperlinkNavigate">https://shuotao.github.io/REVIT_MCP_study/docs/BIM_MCP/index.html</Hyperlink>
+                    </TextBlock>
+
+                    <TextBlock Text="Taiwan AEC Open Knowledge Base（台灣 AEC 開源知識庫）" Margin="0,14,0,0" FontWeight="SemiBold" TextWrapping="Wrap" />
+                    <TextBlock TextWrapping="Wrap" Text="Open-source knowledge base for Architecture, Engineering, and Construction professionals in Taiwan." />
+                    <TextBlock>
+                        <Hyperlink NavigateUri="https://h30190.github.io/HJPLUS_Taiwan_Architect_KB/"
+                                   RequestNavigate="OnHyperlinkNavigate">https://h30190.github.io/HJPLUS_Taiwan_Architect_KB/</Hyperlink>
+                    </TextBlock>
+
                     <TextBlock Margin="0,22,0,0"
                                TextWrapping="Wrap"
                                Foreground="Gray"
