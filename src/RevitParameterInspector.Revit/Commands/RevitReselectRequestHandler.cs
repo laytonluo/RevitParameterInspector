@@ -32,4 +32,10 @@ public sealed class RevitReselectRequestHandler : IReselectRequestHandler
         _handler.SetPendingCallback(onComplete);
         _externalEvent.Raise();
     }
+
+    public void RequestInspectById(long elementId, Action<ReselectResult> onComplete)
+    {
+        _handler.SetPendingInspectById(elementId, onComplete);
+        _externalEvent.Raise();
+    }
 }

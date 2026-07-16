@@ -4,6 +4,15 @@
         Title="{Binding WindowTitle}"
         Width="900" Height="650"
         WindowStartupLocation="CenterOwner">
+    <Window.Resources>
+        <!-- Blue underlined "research by ID" link; double-click re-inspects that element. -->
+        <Style x:Key="ElementIdLinkStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#FF0066CC" />
+            <Setter Property="TextDecorations" Value="Underline" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="ToolTip" Value="Double-click to inspect this element" />
+        </Style>
+    </Window.Resources>
     <DockPanel Margin="8">
         <DockPanel DockPanel.Dock="Bottom" Margin="0,8,0,0" LastChildFill="False">
             <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
@@ -149,7 +158,50 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTextColumn Header="Field" Binding="{Binding Field}" Width="220" />
-                    <DataGridTextColumn Header="Value" Binding="{Binding Value}" Width="*" />
+                    <DataGridTemplateColumn Header="Value" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <TextBlock Text="{Binding Value}" VerticalAlignment="Center">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsIdField}" Value="True">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                    <ItemsControl ItemsSource="{Binding IdTokens}" VerticalAlignment="Center">
+                                        <ItemsControl.Style>
+                                            <Style TargetType="ItemsControl">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsIdField}" Value="True">
+                                                        <Setter Property="Visibility" Value="Visible" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ItemsControl.Style>
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel Orientation="Horizontal" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding}"
+                                                           Style="{StaticResource ElementIdLinkStyle}"
+                                                           Margin="0,0,10,0"
+                                                           MouseLeftButtonDown="OnElementIdLinkMouseDown" />
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </Grid>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </TabItem>
@@ -188,7 +240,39 @@
                         </DataGridTemplateColumn>
                         <DataGridTextColumn Header="Context Type" Binding="{Binding ContextType}" Width="120" />
                         <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="280" />
-                        <DataGridTextColumn Header="ElementId" Binding="{Binding ElementId}" Width="110" />
+                        <DataGridTemplateColumn Header="ElementId" Width="110">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <TextBlock Text="{Binding ElementId}" VerticalAlignment="Center">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsElementIdLink}" Value="True">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                        <TextBlock Text="{Binding ElementId}"
+                                                   VerticalAlignment="Center"
+                                                   MouseLeftButtonDown="OnElementIdLinkMouseDown">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock" BasedOn="{StaticResource ElementIdLinkStyle}">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsElementIdLink}" Value="True">
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </Grid>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                         <DataGridTextColumn Header="Additional Info" Binding="{Binding AdditionalInfo}" Width="*" />
                     </DataGrid.Columns>
                 </DataGrid>

@@ -16,4 +16,11 @@ public interface IReselectRequestHandler
     /// later (on the UI thread) once the host has rebuilt the snapshot or failed.
     /// </summary>
     void RequestReselect(Action<ReselectResult> onComplete);
+
+    /// <summary>
+    /// Requests an inspect of the element with the given id (the "research by ID" flow
+    /// behind the blue ID hyperlinks). The host selects the element in Revit, rebuilds the
+    /// snapshot, and invokes <paramref name="onComplete"/> on the UI thread.
+    /// </summary>
+    void RequestInspectById(long elementId, Action<ReselectResult> onComplete);
 }

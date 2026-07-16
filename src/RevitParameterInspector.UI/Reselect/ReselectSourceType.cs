@@ -6,4 +6,5 @@ public enum ReselectSourceType
     None,
     SelectedElement,
     ActiveView,
+    ById,
 }

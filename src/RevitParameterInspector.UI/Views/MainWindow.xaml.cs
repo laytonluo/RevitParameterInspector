@@ -36,6 +36,33 @@ public partial class MainWindow : Window
     }
 
     /// <summary>
+    /// Double-click on a blue ID hyperlink (Relationships value cells, View/Sheet ElementId
+    /// cells): re-inspect that element and select/zoom to it in Revit.
+    /// </summary>
+    private void OnElementIdLinkMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+        if (e.ClickCount != 2 || sender is not System.Windows.Controls.TextBlock textBlock)
+        {
+            return;
+        }
+
+        if (!long.TryParse(textBlock.Text, out var elementId) || elementId <= 0)
+        {
+            return;
+        }
+
+        e.Handled = true;
+        if (_reselectHandler is null)
+        {
+            _viewModel.StatusMessage = "Inspect by ID is not available in this session.";
+            return;
+        }
+
+        _viewModel.StatusMessage = $"Inspecting element {elementId}...";
+        _reselectHandler.RequestInspectById(elementId, OnReselectCompleted);
+    }
+
+    /// <summary>
     /// Invoked by the host once the ExternalEvent has rebuilt the snapshot. Revit and this
     /// modeless window share the same STA thread, but marshal through the dispatcher anyway
     /// so a future threading change in the host can't corrupt the UI.
@@ -52,9 +79,12 @@ public partial class MainWindow : Window
 
             _viewModel.LoadSnapshot(result.Snapshot);
             var name = result.Snapshot.Identity?.Name ?? result.Snapshot.Identity?.ElementIdString ?? "?";
-            _viewModel.StatusMessage = result.SourceType == ReselectSourceType.ActiveView
-                ? $"Reloaded from active view: {name}"
-                : $"Reloaded from selected element: {name}";
+            _viewModel.StatusMessage = result.SourceType switch
+            {
+                ReselectSourceType.ActiveView => $"Reloaded from active view: {name}",
+                ReselectSourceType.ById => $"Inspected element by id: {name}",
+                _ => $"Reloaded from selected element: {name}",
+            };
         });
     }
 

@@ -10,7 +10,7 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <!-- V1 schema/add-in versioning; bump as the project evolves. -->
-    <RevitParameterInspectorVersion>0.1.0</RevitParameterInspectorVersion>
+    <RevitParameterInspectorVersion>0.2.0</RevitParameterInspectorVersion>
     <Version>$(RevitParameterInspectorVersion)</Version>
   </PropertyGroup>
 

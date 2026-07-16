@@ -11,4 +11,6 @@ namespace RevitParameterInspector.Revit.Compatibility;
 public static class RevitCompatibility
 {
     public static long GetIdValue(ElementId id) => id.Value;
+
+    public static ElementId CreateElementId(long value) => new(value);
 }
