@@ -43,14 +43,15 @@ This is under active development against the HANDOFF spec. Current state:
 - [x] `ObjectInspector` reflection helper shared by the UI grids and Excel sheets
 
 ### Revit integration (`RevitParameterInspector.Revit`)
-- [x] External command with current-selection / pick-element workflow
+- [x] `InspectSelectedElementCommand`: current-selection / pick-element workflow
+- [x] `PickElementCommand`: dedicated command that always prompts to pick, ignoring the
+      current selection
 - [x] Identity, Classification, Parameter (instance + type), Geometry, Location,
       Relationship, View Context, and Sheet Context builders
 - [x] Dictionary Engine wired into Identity (ClassName, BuiltInCategory), Classification
       (ElementKind), and Parameters (BuiltInParameter only - user-created parameters are
       never translated)
 - [ ] Ribbon panel / button registration
-- [ ] Dedicated "Pick Element" command distinct from the main inspect command
 
 ### UI (`RevitParameterInspector.UI`)
 - [x] All 9 tabs: Summary, Parameters, Geometry, Location, Relationships, View/Sheet

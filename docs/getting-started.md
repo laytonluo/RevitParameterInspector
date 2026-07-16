@@ -62,17 +62,24 @@ The short version:
    output DLLs in `%APPDATA%\Autodesk\Revit\Addins\<version>\` - or run
    `install/bundle/build-bundle.ps1` and copy the resulting `.bundle` folder to
    `%ProgramData%\Autodesk\ApplicationPlugins\` instead.
-3. Start Revit. The command becomes available under **Add-Ins > External Tools**. There is no
+3. Start Revit. Both commands become available under **Add-Ins > External Tools**:
+   **RevitParameterInspector** and **RevitParameterInspector - Pick Element**. There is no
    dedicated ribbon panel yet (also an open item in the README's status list).
 
 ## Using it
 
-1. Select a single element in the Revit model (or run the command with nothing selected - it
-   will prompt you to pick one; picking one of several selected elements isn't implemented
-   yet, so the first of a multi-selection is used).
-2. Run **RevitParameterInspector** from Add-Ins > External Tools.
-3. The Inspector window opens with the built snapshot across its tabs. Use **Export JSON /
-   Export Markdown / Export Excel** or **Copy AI Context** at the bottom to get the data out.
+There are two commands, differing only in how they resolve which element to inspect (HANDOFF
+Section 34):
+
+- **RevitParameterInspector** - uses the current selection if there is exactly one element,
+  otherwise prompts you to pick one (picking one of several *already selected* elements isn't
+  implemented yet, so the first of a multi-selection is used).
+- **RevitParameterInspector - Pick Element** - always prompts you to pick a single element,
+  ignoring whatever is currently selected.
+
+Either way: run the command from Add-Ins > External Tools, and the Inspector window opens with
+the built snapshot across its tabs. Use **Export JSON / Export Markdown / Export Excel** or
+**Copy AI Context** at the bottom to get the data out.
 
 See `samples/json`, `samples/markdown`, and `samples/excel` for example output from each
 format, and `dictionary/zh-TW` for the (still partial) built-in terminology dictionary - see
