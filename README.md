@@ -91,9 +91,6 @@ This is under active development against the HANDOFF spec. Current state:
       `install/README.md`
 
 ### Not started
-- Verification against a real Revit installation (not available in the environment this was
-  built in - Revit API references resolve but haven't been exercised inside Revit itself; see
-  `docs/revit-version-support.md`)
 - CI/release pipeline for the install packaging (currently a manual, local script)
 
 ## License
@@ -172,9 +169,7 @@ RevitElementBipChecker concept this project modernizes.
 * [x] 針對各版本的 `.addin` 指明檔（`install/addin/`）以及多版本相容的 `.bundle` 包（`install/bundle/`，內含 `build-bundle.ps1` 封裝腳本）— 詳見 `install/README.md`
 
 ### 尚未開始 (Not started)
-
-* [ ] 於真實 Revit 環境中的實際驗證（由於目前建置環境限制，Revit API 參考雖可正常解析，但尚未在 Revit 軟體內實際執行測試；詳見 `docs/revit-version-support.md`）
-* [ ] 用於安裝封裝的 CI/CD 發布流水線（目前仍為手動的本地端腳本）
+* [ ] 用於安裝封裝的 CI/CD 發布流水線（目前仍需手動安裝的本地端腳本）
 
 ## 授權條款 (License)
 
