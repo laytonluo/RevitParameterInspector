@@ -1,18 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RevitAddIns>
-  <AddIn Type="Command">
-    <Name>RevitParameterInspector - Active View</Name>
+  <AddIn Type="Application">
+    <Name>RevitParameterInspector</Name>
     <Assembly>.\RevitParameterInspector.Revit.dll</Assembly>
-    <AddInId>8200ACF5-29CE-4F7D-B9EA-E9E27A60926A</AddInId>
-    <FullClassName>RevitParameterInspector.Revit.Commands.InspectActiveViewCommand</FullClassName>
-    <VendorId>RPI</VendorId>
-    <VendorDescription>RevitParameterInspector Contributors</VendorDescription>
-  </AddIn>
-  <AddIn Type="Command">
-    <Name>RevitParameterInspector - Pick Element</Name>
-    <Assembly>.\RevitParameterInspector.Revit.dll</Assembly>
-    <AddInId>30CAA6A6-9406-4791-B0B7-80CBD24ECAFF</AddInId>
-    <FullClassName>RevitParameterInspector.Revit.Commands.PickElementCommand</FullClassName>
+    <AddInId>10626BE3-4536-4D6C-AB94-5A8CF1B60CDB</AddInId>
+    <FullClassName>RevitParameterInspector.Revit.RevitParameterInspectorApplication</FullClassName>
     <VendorId>RPI</VendorId>
     <VendorDescription>RevitParameterInspector Contributors</VendorDescription>
   </AddIn>

@@ -62,24 +62,29 @@ The short version:
    output DLLs in `%APPDATA%\Autodesk\Revit\Addins\<version>\` - or run
    `install/bundle/build-bundle.ps1` and copy the resulting `.bundle` folder to
    `%ProgramData%\Autodesk\ApplicationPlugins\` instead.
-3. Start Revit. Both commands become available under **Add-Ins > External Tools**:
-   **RevitParameterInspector** and **RevitParameterInspector - Pick Element**. There is no
-   dedicated ribbon panel yet (also an open item in the README's status list).
+3. Start Revit. A **ParameterInspector** panel appears on the **Add-Ins** tab (next to any
+   other installed add-in's panel), with two buttons: **RevitParameterInspector** and
+   **Selection Ids List Ex**.
 
 ## Using it
 
-There are two commands, differing only in how they resolve which element to inspect (HANDOFF
-Section 34):
+### RevitParameterInspector
 
-- **RevitParameterInspector** - uses the current selection if there is exactly one element,
-  otherwise prompts you to pick one (picking one of several *already selected* elements isn't
-  implemented yet, so the first of a multi-selection is used).
-- **RevitParameterInspector - Pick Element** - always prompts you to pick a single element,
-  ignoring whatever is currently selected.
+One button, auto-detecting: it inspects the current selection's first element when something
+is selected, otherwise it falls back to the active view (multi-selection uses the first
+element only). Click it and the Inspector window opens with the built snapshot across its
+tabs. Use **Export JSON / Export Markdown / Export Excel** or **Copy AI Context** at the bottom
+to get the data out.
 
-Either way: run the command from Add-Ins > External Tools, and the Inspector window opens with
-the built snapshot across its tabs. Use **Export JSON / Export Markdown / Export Excel** or
-**Copy AI Context** at the bottom to get the data out.
+### Selection Ids List Ex
+
+A lightweight panel for grabbing ids without opening the full Inspector. With nothing
+selected it shows just the active view id (**Copy View Id** / **Close**). With elements
+selected it also groups their ids by category, and adds **Copy View & Selection Ids** (plain
+comma-separated ids, no labels - handy for pasting into scripts), **Copy All Text** (the panel's
+full displayed text as-is), and **Copy OST Category** (the same content, but with English field
+labels and `OST_`-prefixed category names - copy-only, the panel's own display stays in
+Revit's UI language).
 
 See `samples/json`, `samples/markdown`, and `samples/excel` for example output from each
 format, and `dictionary/zh-TW` for the (still partial) built-in terminology dictionary - see

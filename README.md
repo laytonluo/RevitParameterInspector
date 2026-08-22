@@ -43,15 +43,18 @@ This is under active development against the HANDOFF spec. Current state:
 - [x] `ObjectInspector` reflection helper shared by the UI grids and Excel sheets
 
 ### Revit integration (`RevitParameterInspector.Revit`)
-- [x] `InspectSelectedElementCommand`: current-selection / pick-element workflow
-- [x] `PickElementCommand`: dedicated command that always prompts to pick, ignoring the
-      current selection
+- [x] `InspectSelectionOrActiveViewCommand`: single command - inspects the current selection
+      when something is selected, otherwise the active view
+- [x] `SelectionIdsListCommand`: "Selection Ids List Ex" panel - active view id and, when
+      something is selected, the selected element ids grouped by category, with copy-friendly
+      (plain ids, full text, English/OST category) clipboard variants
 - [x] Identity, Classification, Parameter (instance + type), Geometry, Location,
       Relationship, View Context, and Sheet Context builders
 - [x] Dictionary Engine wired into Identity (ClassName, BuiltInCategory), Classification
       (ElementKind), and Parameters (BuiltInParameter only - user-created parameters are
       never translated)
-- [ ] Ribbon panel / button registration
+- [x] Ribbon panel / button registration (`RevitParameterInspectorApplication`: a
+      "ParameterInspector" panel on the Add-Ins tab with both buttons)
 
 ### UI (`RevitParameterInspector.UI`)
 - [x] All 9 tabs: Summary, Parameters, Geometry, Location, Relationships, View/Sheet
@@ -133,11 +136,11 @@ RevitElementBipChecker concept this project modernizes.
 
 ### Revit 整合 (RevitParameterInspector.Revit)
 
-* [x] 具備「當前選取物件」/「點選元素」工作流的外部命令（External command）
+* [x] 合併後的單一指令 `InspectSelectionOrActiveViewCommand`：有選取物件時檢查選取物件，沒有選取時改為檢查目前視圖
+* [x] `SelectionIdsListCommand`：「Selection Ids List Ex」面板，顯示目前視圖ID，以及（有選取時）依類別分組的選取物件ID，並提供多種複製格式（純ID、完整文字、英文/OST品類版本）
 * [x] 建立器（Builders）：Identity、Classification、Parameter（實體 + 類型）、Geometry、Location、Relationship、View Context 以及 Sheet Context
 * [x] 字典引擎：已串接至 Identity（ClassName、BuiltInCategory）、Classification（ElementKind）與 Parameters（僅限 BuiltInParameter — 使用者自訂參數絕不進行翻譯）
-* [x] 頁籤面板（Ribbon panel）與按鈕註冊
-* [x] 獨立於主檢查命令之外的專用「點選元素（Pick Element）」命令
+* [x] Ribbon 面板與按鈕註冊（`RevitParameterInspectorApplication`：在「增益集」分頁上建立「ParameterInspector」面板，內含兩顆獨立按鈕）
 
 ### 使用者介面 (RevitParameterInspector.UI)
 

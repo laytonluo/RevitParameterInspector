@@ -6,6 +6,17 @@
     <RootNamespace>RevitParameterInspector.Revit</RootNamespace>
     <AssemblyName>RevitParameterInspector.Revit</AssemblyName>
     <GenerateDependencyFile>false</GenerateDependencyFile>
+    <!-- Needed for RevitAPIUI's ribbon image properties (System.Windows.Media.ImageSource/BitmapImage). -->
+    <UseWPF>true</UseWPF>
+    <!--
+      This is a Revit plug-in, not an app: nothing runs "dotnet RevitParameterInspector.Revit.dll"
+      to resolve a deps.json, Revit just loads the dll from a folder. .NET Framework (net48)
+      always copies package-reference assemblies next to the output; .NET (net8.0-windows)
+      class libraries do not by default (they expect a deps.json instead, which we disable
+      above), so without this, transitive package assemblies (e.g. Export's ClosedXML) were
+      silently missing from the net8.0-windows output (Revit 2025/2026).
+    -->
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 
   <!-- Resolve which Revit version this TFM+property combination targets. -->
@@ -57,6 +68,14 @@
   <ItemGroup>
     <None Include="..\..\dictionary\**\*.json">
       <Link>dictionary\%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <!-- Ship the ribbon button icons next to the add-in so RevitParameterInspectorApplication can find them at runtime. -->
+  <ItemGroup>
+    <None Include="..\..\ICON\*.png">
+      <Link>icons\%(Filename)%(Extension)</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

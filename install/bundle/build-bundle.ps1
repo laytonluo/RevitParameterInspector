@@ -69,6 +69,11 @@ foreach ($version in $Versions) {
     if (Test-Path $dictionarySource) {
         Copy-Item -Path $dictionarySource -Destination $destination -Recurse -Force
     }
+
+    $iconsSource = Join-Path $outputDir 'icons'
+    if (Test-Path $iconsSource) {
+        Copy-Item -Path $iconsSource -Destination $destination -Recurse -Force
+    }
 }
 
 Write-Host "==> Done. RevitParameterInspector.bundle is ready under $(Split-Path $bundleContents -Parent)." -ForegroundColor Green

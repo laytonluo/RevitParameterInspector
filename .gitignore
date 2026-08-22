@@ -27,3 +27,4 @@ Thumbs.db
 /install/bundle/RevitParameterInspector.bundle/Contents/*/*.dll
 /install/bundle/RevitParameterInspector.bundle/Contents/*/*.pdb
 /install/bundle/RevitParameterInspector.bundle/Contents/*/dictionary/
+/install/bundle/RevitParameterInspector.bundle/Contents/*/icons/

@@ -6,14 +6,14 @@ using RevitParameterInspector.Revit.Selection;
 namespace RevitParameterInspector.Revit.Commands;
 
 /// <summary>
-/// Entry point external command for HANDOFF Section 34.2's dedicated "Pick Element" workflow:
-/// always prompts the user to pick a single element, ignoring the current selection (unlike
-/// <see cref="InspectSelectedElementCommand"/>, which prefers the current selection when there
-/// is exactly one element).
+/// The single ribbon entry point for RevitParameterInspector (v0.3.0 merges what used to be
+/// two separate commands/buttons - see <see cref="ReselectExternalEventHandler"/>'s identical
+/// logic for the Reselect button): inspects the current selection's first element when
+/// something is selected, otherwise falls back to the active view.
 /// </summary>
 [Transaction(TransactionMode.ReadOnly)]
 [Regeneration(RegenerationOption.Manual)]
-public sealed class PickElementCommand : IExternalCommand
+public sealed class InspectSelectionOrActiveViewCommand : IExternalCommand
 {
     public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
     {
@@ -24,11 +24,11 @@ public sealed class PickElementCommand : IExternalCommand
             return Result.Failed;
         }
 
-        var element = new SelectionReader().PickSingleElement(uiDocument);
+        var (element, _) = new SelectionReader().GetFirstSelectedOrActiveView(uiDocument);
         if (element is null)
         {
-            message = "No element was picked.";
-            return Result.Cancelled;
+            message = "No selected element or active view is available.";
+            return Result.Failed;
         }
 
         return InspectionRunner.Run(commandData, element, ref message);

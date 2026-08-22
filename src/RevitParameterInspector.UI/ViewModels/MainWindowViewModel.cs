@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using RevitParameterInspector.Core.Models;
@@ -29,6 +30,9 @@ public sealed class MainWindowViewModel : INotifyPropertyChanged
     public ElementContextSnapshot Snapshot { get; private set; } = null!;
 
     public string WindowTitle { get; private set; } = string.Empty;
+
+    /// <summary>Read from the assembly's informational version (set from `Directory.Build.props`), so the About Me tab never goes stale.</summary>
+    public string VersionText { get; } = BuildVersionText();
 
     public IReadOnlyList<SelectableFieldRow> SummaryRows { get; private set; } = Array.Empty<SelectableFieldRow>();
     public IReadOnlyList<SelectableFieldRow> GeometryRows { get; private set; } = Array.Empty<SelectableFieldRow>();
@@ -96,6 +100,16 @@ public sealed class MainWindowViewModel : INotifyPropertyChanged
     public MainWindowViewModel(ElementContextSnapshot snapshot)
     {
         LoadSnapshot(snapshot);
+    }
+
+    private static string BuildVersionText()
+    {
+        var assembly = typeof(MainWindowViewModel).Assembly;
+        var informational = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion;
+        // SDK-generated InformationalVersion appends "+<git-sha>" build metadata (deterministic
+        // builds in a git repo) - not useful in the UI, so keep only the semver core.
+        var version = informational?.Split('+')[0] ?? assembly.GetName().Version?.ToString(3);
+        return $"v{version ?? "?"}";
     }
 
     /// <summary>

@@ -333,6 +333,7 @@
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel Margin="24" MaxWidth="620" HorizontalAlignment="Left">
                     <TextBlock Text="RevitParameterInspector" FontSize="22" FontWeight="Bold" />
+                    <TextBlock Text="{Binding VersionText}" Margin="0,4,0,0" Foreground="Gray" />
 
                     <TextBlock Text="Created by" Margin="0,18,0,0" Foreground="Gray" />
                     <TextBlock Text="Layton Luo" FontSize="16" FontWeight="SemiBold" />

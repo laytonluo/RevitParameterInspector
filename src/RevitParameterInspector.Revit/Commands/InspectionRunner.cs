@@ -10,11 +10,10 @@ using CoreModels = RevitParameterInspector.Core.Models;
 namespace RevitParameterInspector.Revit.Commands;
 
 /// <summary>
-/// Shared "load dictionary, build snapshot, show inspector window" workflow used by both
-/// <see cref="InspectActiveViewCommand"/> and <see cref="PickElementCommand"/>. The two
-/// commands differ only in how they resolve which element to inspect (HANDOFF Section 34).
-/// <see cref="BuildSnapshot"/> is also the rebuild path for the Reselect button
-/// (<see cref="ReselectExternalEventHandler"/>), so both flows stay identical.
+/// Shared "load dictionary, build snapshot, show inspector window" workflow used by
+/// <see cref="InspectSelectionOrActiveViewCommand"/>. <see cref="BuildSnapshot"/> is also the
+/// rebuild path for the Reselect button (<see cref="ReselectExternalEventHandler"/>), so both
+/// flows stay identical.
 /// </summary>
 internal static class InspectionRunner
 {
