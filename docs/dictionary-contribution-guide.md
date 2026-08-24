@@ -67,15 +67,32 @@ Here's where each one stands today:
 | `Space` | 空間 | MEP space | ⬜ Missing | `api_terms.json` |
 
 `builtin_categories.json` and `builtin_parameters_common.json` (for `BuiltInCategory` and
-`BuiltInParameter` enum names respectively) don't have a HANDOFF seed list at all yet - these
-are the biggest open gap, since they're what actually drives `Identity.BuiltInCategoryLocalized`
-and every `ParameterInfoRecord.LocalizedName` for built-in parameters. Picking a handful of the
-most common `BuiltInCategory`/`BuiltInParameter` values you use often and adding them is one of
-the most useful first contributions.
+`BuiltInParameter` enum names respectively) are **machine-generated** and are the one part of
+the dictionary you should not hand-add entries to - see
+[Machine-generated files](#machine-generated-files) below.
 
 The zh-TW/zh-CN translations above are a draft per HANDOFF Section 20.5 - if your industry
 usage differs, correct them (with a note explaining why, per rule 6 in CONTRIBUTING.md) rather
 than treating the table as final.
+
+## Machine-generated files
+
+`builtin_categories.json` (1061 entries) and `builtin_parameters_common.json` (3572 entries)
+are generated from a running Revit 2024 with `LabelUtils.GetLabelFor(...)`, which returns the
+exact label Revit's own UI shows for each enum member. `tools/dictionary-generator/` holds the
+tool and the full procedure for regenerating them.
+
+Two rules follow from that:
+
+- **Don't hand-add entries to these two files.** A regeneration would drop them. New
+  `BuiltInCategory`/`BuiltInParameter` coverage comes from running the generator against a
+  newer Revit, not from editing the JSON.
+- **Do hand-correct `localizedName`, and flip `status` to `Reviewed` when you do.** Every
+  generated entry ships as `NeedsReview` precisely because an Autodesk-official label is not
+  automatically the term Taiwan practitioners use (CONTRIBUTING.md rules 3 and 9) - for
+  example `OST_Levels` is labelled 多個樓層 where practitioners say 樓層. A corrected entry
+  with `status: "Reviewed"` is exactly the contribution these files need, and the generator
+  will not silently overwrite one: regenerating is a deliberate, reviewable diff.
 
 ## Workflow
 
