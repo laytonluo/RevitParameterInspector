@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- Revit 2023 and 2024 are both .NET Framework 4.8; 2025+ would need net8.0-windows. -->
+    <TargetFramework>net48</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <RootNamespace>RpiLabelGen</RootNamespace>
+    <AssemblyName>RpiLabelGen</AssemblyName>
+    <UseWindowsForms>false</UseWindowsForms>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <!-- Which Revit's API to compile against: -p:RevitVersion=2023 | 2024 -->
+    <RevitVersion Condition="'$(RevitVersion)'==''">2024</RevitVersion>
+    <RevitInstallDir Condition="'$(RevitInstallDir)'==''">C:\Program Files\Autodesk\Revit $(RevitVersion)</RevitInstallDir>
+    <BaseOutputPath>bin\$(RevitVersion)\</BaseOutputPath>
+  </PropertyGroup>
+
+  <!-- src\**\*.cs is picked up by the SDK's default globbing; an explicit Include would duplicate it. -->
+
+  <ItemGroup>
+    <Reference Include="RevitAPI">
+      <HintPath>$(RevitInstallDir)\RevitAPI.dll</HintPath>
+      <Private>false</Private>
+      <SpecificVersion>false</SpecificVersion>
+    </Reference>
+    <Reference Include="RevitAPIUI">
+      <HintPath>$(RevitInstallDir)\RevitAPIUI.dll</HintPath>
+      <Private>false</Private>
+      <SpecificVersion>false</SpecificVersion>
+    </Reference>
+  </ItemGroup>
+
+</Project>
