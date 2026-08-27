@@ -93,6 +93,14 @@ This is under active development against the HANDOFF spec. Current state:
 ### Not started
 - CI/release pipeline for the install packaging (currently a manual, local script)
 
+## Acknowledgments
+
+- **[@a0917-cell](https://github.com/a0917-cell)** — built `tools/dictionary-generator/`
+  (a Revit add-in that dumps `LabelUtils.GetLabelFor` output for every `BuiltInCategory` /
+  `BuiltInParameter`) and used it to populate the zh-TW `builtin_categories.json` (1061
+  entries) and `builtin_parameters_common.json` (3572 entries) dictionaries, which had been
+  empty placeholders. See [#1](https://github.com/laytonluo/RevitParameterInspector/pull/1).
+
 ## License
 
 MIT - see `LICENSE`. See `NOTICE.md` for attribution notes relative to the original
@@ -170,6 +178,10 @@ RevitElementBipChecker concept this project modernizes.
 
 ### 尚未開始 (Not started)
 * [ ] 用於安裝封裝的 CI/CD 發布流水線（目前仍需手動安裝的本地端腳本）
+
+## 鳴謝 (Acknowledgments)
+
+* **[@a0917-cell](https://github.com/a0917-cell)** — 開發了 `tools/dictionary-generator/`（一個 Revit 增益集，透過 `LabelUtils.GetLabelFor` 匯出每一個 `BuiltInCategory` / `BuiltInParameter` 的官方標籤），並用它灌入了原本是空留位符的繁體中文字典檔：`builtin_categories.json`（1061 筆）與 `builtin_parameters_common.json`（3572 筆）。詳見 [#1](https://github.com/laytonluo/RevitParameterInspector/pull/1)。
 
 ## 授權條款 (License)
 
