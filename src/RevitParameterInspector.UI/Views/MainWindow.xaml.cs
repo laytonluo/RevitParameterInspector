@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Navigation;
 using Microsoft.Win32;
@@ -121,6 +123,42 @@ public partial class MainWindow : Window
         catch (Exception ex)
         {
             MessageBox.Show(this, $"Failed to copy unresolved terms: {ex.Message}", "RevitParameterInspector", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
+    }
+
+    /// <summary>
+    /// Refreshes the Dictionary tab's selection preview. Uses DictionaryTerms (grid display
+    /// order) filtered by SelectedItems rather than SelectedItems directly, since
+    /// DataGrid.SelectedItems does not preserve display order.
+    /// </summary>
+    private void OnDictionaryTermsSelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+    {
+        var selected = new HashSet<DictionaryTermInfo>(DictionaryTermsGrid.SelectedItems.Cast<DictionaryTermInfo>());
+        var orderedSelection = _viewModel.DictionaryTerms.Where(selected.Contains);
+        _viewModel.UpdateSelectedDictionaryTerms(orderedSelection);
+    }
+
+    private void OnCopyIdAndApiNameClick(object sender, RoutedEventArgs e) =>
+        CopySelectedDictionaryNames("API Name", _viewModel.SelectedDictionaryApiNames);
+
+    private void OnCopyIdAndLocalizedNameClick(object sender, RoutedEventArgs e) =>
+        CopySelectedDictionaryNames("Localized Name", _viewModel.SelectedDictionaryLocalizedNames);
+
+    private void CopySelectedDictionaryNames(string label, IReadOnlyCollection<string> names)
+    {
+        if (names.Count == 0)
+        {
+            _viewModel.StatusMessage = "No dictionary rows selected.";
+            return;
+        }
+
+        try
+        {
+            Clipboard.SetText(_viewModel.BuildDictionaryCopyText(label, names));
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(this, $"Failed to copy {label}: {ex.Message}", "RevitParameterInspector", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
     }
 

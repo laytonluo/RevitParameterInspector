@@ -42,6 +42,13 @@ public sealed class MainWindowViewModel : INotifyPropertyChanged
     public IReadOnlyList<DictionaryTermInfo> DictionaryTerms { get; private set; } = Array.Empty<DictionaryTermInfo>();
     public string DictionaryCountsText { get; private set; } = string.Empty;
     public string UnresolvedDictionaryTermsText { get; private set; } = string.Empty;
+
+    /// <summary>Live preview of the Dictionary grid's currently selected rows, in grid order.</summary>
+    public ObservableCollection<string> SelectedDictionaryApiNames { get; } = new();
+    public ObservableCollection<string> SelectedDictionaryLocalizedNames { get; } = new();
+
+    /// <summary>Same selection, one line per row as "{ApiName} {LocalizedName}" for the single-column preview list.</summary>
+    public ObservableCollection<string> SelectedDictionaryPreviewLines { get; } = new();
     public string RawJson { get; private set; } = string.Empty;
     public string AiContext { get; private set; } = string.Empty;
 
@@ -132,6 +139,9 @@ public sealed class MainWindowViewModel : INotifyPropertyChanged
         DictionaryTerms = snapshot.Dictionary;
         DictionaryCountsText = $"Resolved Terms: {snapshot.Dictionary.Count}    Unresolved Terms: {snapshot.UnresolvedDictionaryTerms.Count}";
         UnresolvedDictionaryTermsText = BuildUnresolvedTermsText(snapshot.UnresolvedDictionaryTerms);
+        SelectedDictionaryApiNames.Clear();
+        SelectedDictionaryLocalizedNames.Clear();
+        SelectedDictionaryPreviewLines.Clear();
         RawJson = JsonExporter.Serialize(snapshot);
         AiContext = AiContextComposer.Build(snapshot);
 
@@ -157,6 +167,33 @@ public sealed class MainWindowViewModel : INotifyPropertyChanged
     {
         var request = BuildSelectiveRequest();
         return request is null ? AiContextComposer.Build(Snapshot) : SelectiveCopyBuilder.BuildAiContext(request);
+    }
+
+    /// <summary>
+    /// Refreshes the Dictionary tab's live selection preview (called from the DataGrid's
+    /// SelectionChanged handler). <paramref name="selectedTerms"/> must already be in grid
+    /// display order - DataGrid.SelectedItems does not guarantee it.
+    /// </summary>
+    public void UpdateSelectedDictionaryTerms(IEnumerable<DictionaryTermInfo> selectedTerms)
+    {
+        SelectedDictionaryApiNames.Clear();
+        SelectedDictionaryLocalizedNames.Clear();
+        SelectedDictionaryPreviewLines.Clear();
+        foreach (var term in selectedTerms)
+        {
+            var apiName = term.ApiName ?? string.Empty;
+            var localizedName = term.LocalizedName ?? string.Empty;
+            SelectedDictionaryApiNames.Add(apiName);
+            SelectedDictionaryLocalizedNames.Add(localizedName);
+            SelectedDictionaryPreviewLines.Add($"{apiName} {localizedName}");
+        }
+    }
+
+    /// <summary>Clipboard payload for the Dictionary tab's "Copy ID &amp; ..." buttons: the current element id plus the given selected names, single-line.</summary>
+    public string BuildDictionaryCopyText(string label, IEnumerable<string> names)
+    {
+        var elementId = Snapshot.Identity?.ElementIdString ?? "?";
+        return $"ID :{elementId}、{label}:{string.Join("、", names)}";
     }
 
     /// <summary>Returns null when nothing is checked anywhere (callers fall back to full output).</summary>
