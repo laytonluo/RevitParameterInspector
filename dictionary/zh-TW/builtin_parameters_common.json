@@ -2554,10 +2554,11 @@
     "apiName": "DIRECTCONTEXT3D_APPLICATION_ID",
     "localizedName": "ApplicationId",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "DIRECTCONTEXT3D_LOADED",
@@ -2574,10 +2575,11 @@
     "apiName": "DIRECTCONTEXT3D_SERVER_ID",
     "localizedName": "ServerId",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "DIRECTCONTEXT3D_NAME",
@@ -5004,10 +5006,11 @@
     "apiName": "STAIRS_RUN_CCW",
     "localizedName": "CCW",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "STAIRS_RUN_CREATE_AUTO_LANDING",
@@ -9074,10 +9077,11 @@
     "apiName": "FABRICATION_ROUTING_SOLUTIONS_UI_PARAM",
     "localizedName": "x/XX",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "FABRICATION_PRODUCT_CODE",
@@ -9424,10 +9428,11 @@
     "apiName": "FABRICATION_PRODUCT_DATA_OEM",
     "localizedName": "OEM",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "FABRICATION_PRODUCT_DATA_PRODUCT",
@@ -11284,30 +11289,33 @@
     "apiName": "RBS_PIPE_WFU_PARAM",
     "localizedName": "WFU",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "RBS_PIPE_HWFU_PARAM",
     "apiName": "RBS_PIPE_HWFU_PARAM",
     "localizedName": "HWFU",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "RBS_PIPE_CWFU_PARAM",
     "apiName": "RBS_PIPE_CWFU_PARAM",
     "localizedName": "CWFU",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "RBS_PIPE_FLOW_CONFIGURATION_PARAM",
@@ -15594,10 +15602,11 @@
     "apiName": "RBS_ENERGY_ANALYSIS_SURFACE_CADOBJECTID",
     "localizedName": "CADObjectID",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "RBS_ENERGY_ANALYSIS_SURFACE_ADJACENT_SPACE_ID2",
@@ -15864,10 +15873,11 @@
     "apiName": "RBS_IS_CUSTOM_FITTING",
     "localizedName": "IsCustom",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "RBS_CONNECTOR_OFFSET_OBSOLETE",
@@ -17294,30 +17304,33 @@
     "apiName": "IFC_ORGANIZATION",
     "localizedName": "IfcOrganization",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "IFC_APPLICATION_VERSION",
     "apiName": "IFC_APPLICATION_VERSION",
     "localizedName": "IfcApplicationVersion",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "IFC_APPLICATION_NAME",
     "apiName": "IFC_APPLICATION_NAME",
     "localizedName": "IfcApplicationName",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "PROJECT_ORGANIZATION_NAME",
@@ -17364,30 +17377,33 @@
     "apiName": "IFC_SITE_GUID",
     "localizedName": "IfcSite GUID",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "IFC_BUILDING_GUID",
     "apiName": "IFC_BUILDING_GUID",
     "localizedName": "IfcBuilding GUID",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "IFC_PROJECT_GUID",
     "apiName": "IFC_PROJECT_GUID",
     "localizedName": "IfcProject GUID",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "IFC_TYPE_GUID",
@@ -17404,10 +17420,11 @@
     "apiName": "IFC_GUID",
     "localizedName": "IfcGUID",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "STRUCT_CONNECTION_TYPE_NAME",
@@ -18994,40 +19011,44 @@
     "apiName": "FABRIC_PARAM_SPAN_SYM_D_RIGHT",
     "localizedName": "D_Right",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "FABRIC_PARAM_SPAN_SYM_D_LEFT",
     "apiName": "FABRIC_PARAM_SPAN_SYM_D_LEFT",
     "localizedName": "D_Left",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "FABRIC_PARAM_SPAN_SYM_D_BOTTOM",
     "apiName": "FABRIC_PARAM_SPAN_SYM_D_BOTTOM",
     "localizedName": "D_Bottom",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "FABRIC_PARAM_SPAN_SYM_D_TOP",
     "apiName": "FABRIC_PARAM_SPAN_SYM_D_TOP",
     "localizedName": "D_Top",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "FABRIC_PARAM_SPAN_SYM_RIGHT",
@@ -20434,90 +20455,99 @@
     "apiName": "LOAD_AREA_FORCE_FZ3",
     "localizedName": "Fz 3",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "LOAD_AREA_FORCE_FY3",
     "apiName": "LOAD_AREA_FORCE_FY3",
     "localizedName": "Fy 3",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "LOAD_AREA_FORCE_FX3",
     "apiName": "LOAD_AREA_FORCE_FX3",
     "localizedName": "Fx 3",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "LOAD_AREA_FORCE_FZ2",
     "apiName": "LOAD_AREA_FORCE_FZ2",
     "localizedName": "Fz 2",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "LOAD_AREA_FORCE_FY2",
     "apiName": "LOAD_AREA_FORCE_FY2",
     "localizedName": "Fy 2",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "LOAD_AREA_FORCE_FX2",
     "apiName": "LOAD_AREA_FORCE_FX2",
     "localizedName": "Fx 2",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "LOAD_AREA_FORCE_FZ1",
     "apiName": "LOAD_AREA_FORCE_FZ1",
     "localizedName": "Fz 1",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "LOAD_AREA_FORCE_FY1",
     "apiName": "LOAD_AREA_FORCE_FY1",
     "localizedName": "Fy 1",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "LOAD_AREA_FORCE_FX1",
     "apiName": "LOAD_AREA_FORCE_FX1",
     "localizedName": "Fx 1",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "LOAD_LINEAR_LENGTH",
@@ -20544,180 +20574,198 @@
     "apiName": "LOAD_MOMENT_MZ2",
     "localizedName": "Mz 2",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "LOAD_MOMENT_MY2",
     "apiName": "LOAD_MOMENT_MY2",
     "localizedName": "My 2",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "LOAD_MOMENT_MX2",
     "apiName": "LOAD_MOMENT_MX2",
     "localizedName": "Mx 2",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "LOAD_MOMENT_MZ1",
     "apiName": "LOAD_MOMENT_MZ1",
     "localizedName": "Mz 1",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "LOAD_MOMENT_MY1",
     "apiName": "LOAD_MOMENT_MY1",
     "localizedName": "My 1",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "LOAD_MOMENT_MX1",
     "apiName": "LOAD_MOMENT_MX1",
     "localizedName": "Mx 1",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "LOAD_LINEAR_FORCE_FZ2",
     "apiName": "LOAD_LINEAR_FORCE_FZ2",
     "localizedName": "Fz 2",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "LOAD_LINEAR_FORCE_FY2",
     "apiName": "LOAD_LINEAR_FORCE_FY2",
     "localizedName": "Fy 2",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "LOAD_LINEAR_FORCE_FX2",
     "apiName": "LOAD_LINEAR_FORCE_FX2",
     "localizedName": "Fx 2",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "LOAD_LINEAR_FORCE_FZ1",
     "apiName": "LOAD_LINEAR_FORCE_FZ1",
     "localizedName": "Fz 1",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "LOAD_LINEAR_FORCE_FY1",
     "apiName": "LOAD_LINEAR_FORCE_FY1",
     "localizedName": "Fy 1",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "LOAD_LINEAR_FORCE_FX1",
     "apiName": "LOAD_LINEAR_FORCE_FX1",
     "localizedName": "Fx 1",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "LOAD_MOMENT_MZ",
     "apiName": "LOAD_MOMENT_MZ",
     "localizedName": "Mz",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "LOAD_MOMENT_MY",
     "apiName": "LOAD_MOMENT_MY",
     "localizedName": "My",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "LOAD_MOMENT_MX",
     "apiName": "LOAD_MOMENT_MX",
     "localizedName": "Mx",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "LOAD_FORCE_FZ",
     "apiName": "LOAD_FORCE_FZ",
     "localizedName": "Fz",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "LOAD_FORCE_FY",
     "apiName": "LOAD_FORCE_FY",
     "localizedName": "Fy",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "LOAD_FORCE_FX",
     "apiName": "LOAD_FORCE_FX",
     "localizedName": "Fx",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "LOAD_IS_HOSTED",
@@ -21104,10 +21152,11 @@
     "apiName": "BEAM_SYSTEM_3D_PARAM",
     "localizedName": "3D",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "JOIST_SYSTEM_NEW_BEAM_TYPE_NO_FAM_NAME_PARAM",
@@ -23974,10 +24023,11 @@
     "apiName": "ALL_MODEL_URL",
     "localizedName": "URL",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "ALL_MODEL_DESCRIPTION",
@@ -29954,10 +30004,11 @@
     "apiName": "STRUCTURAL_FAMILY_NAME_KEY",
     "localizedName": "Family Name Key",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "STRUCTURAL_SECTION_NAME_KEY",
@@ -32814,10 +32865,11 @@
     "apiName": "ID_PARAM",
     "localizedName": "Id",
     "category": "BuiltInParameter",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo",
+    "notes": "Autodesk provides no zh-TW translation for this term; the label is kept as-is (English/symbol) intentionally."
   },
   {
     "termKey": "SELECTION_EDITABLE_ONLY",

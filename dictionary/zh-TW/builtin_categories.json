@@ -9302,12 +9302,13 @@
   {
     "termKey": "OST_Levels",
     "apiName": "OST_Levels",
-    "localizedName": "多個樓層",
+    "localizedName": "樓層",
     "category": "BuiltInCategory",
-    "status": "NeedsReview",
+    "status": "Reviewed",
     "source": "Autodesk LabelUtils (Revit 2024 Chinese_Traditional)",
-    "lastUpdated": "2026-08-24",
-    "contributor": "a0917-cell"
+    "notes": "Autodesk's official label is 多個樓層; Taiwan practitioners say 樓層.",
+    "lastUpdated": "2026-08-27",
+    "contributor": "laytonluo"
   },
   {
     "termKey": "OST_DisplacementPath",
