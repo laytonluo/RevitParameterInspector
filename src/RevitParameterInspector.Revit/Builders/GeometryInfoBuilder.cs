@@ -1,4 +1,6 @@
+using System;
 using Autodesk.Revit.DB;
+using RevitParameterInspector.Core.Logging;
 using CoreModels = RevitParameterInspector.Core.Models;
 
 namespace RevitParameterInspector.Revit.Builders;
@@ -48,9 +50,10 @@ public static class GeometryInfoBuilder
             info.DepthY = sizeY;
             info.HeightZ = sizeZ;
         }
-        catch
+        catch (Exception ex)
         {
             info.GeometryReadStatus = CoreModels.GeometryReadStatus.Failed;
+            FileLogger.LogException("GeometryInfoBuilder", "ReadBoundingBox", ex);
         }
     }
 
@@ -79,9 +82,10 @@ public static class GeometryInfoBuilder
                 info.GeometryReadStatus = CoreModels.GeometryReadStatus.Ok;
             }
         }
-        catch
+        catch (Exception ex)
         {
             info.GeometryReadStatus = CoreModels.GeometryReadStatus.Failed;
+            FileLogger.LogException("GeometryInfoBuilder", "ReadGeometryCounts", ex);
         }
     }
 

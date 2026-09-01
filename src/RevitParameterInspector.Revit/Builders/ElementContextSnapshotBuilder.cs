@@ -26,6 +26,8 @@ public static class ElementContextSnapshotBuilder
         var document = element.Document;
         var application = document.Application;
 
+        var viewSheetContexts = ViewSheetContextReader.Read(document, activeView, element, out var viewSheetScanPending);
+
         var snapshot = new CoreModels.ElementContextSnapshot
         {
             GeneratedAt = DateTimeOffset.UtcNow,
@@ -47,7 +49,8 @@ public static class ElementContextSnapshotBuilder
             Relationships = RelationshipInfoBuilder.Build(element),
             ViewContext = ViewContextInfoBuilder.Build(element),
             SheetContext = SheetContextInfoBuilder.Build(element),
-            ViewSheetContexts = ViewSheetContextReader.Read(document, activeView, element),
+            ViewSheetContexts = viewSheetContexts,
+            ViewSheetScanPending = viewSheetScanPending,
         };
 
         snapshot.Parameters.AddRange(ParameterReader.ReadInstanceParameters(element, resolver));

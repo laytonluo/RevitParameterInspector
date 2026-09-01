@@ -17,12 +17,24 @@
         <DockPanel DockPanel.Dock="Bottom" Margin="0,8,0,0" LastChildFill="False">
             <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
                 <Button Content="Reselect" Padding="10,4" Click="OnReselectClick" />
+                <Button Content="Scan Project-Wide Views"
+                        Padding="10,4"
+                        Margin="8,0,0,0"
+                        Click="OnScanViewSheetClick"
+                        IsEnabled="{Binding CanScanViewSheetContext}"
+                        ToolTip="Scans every view in the project for elements with no owner view (e.g. walls/columns/beams). Only enabled on the View / Sheet Context tab, for elements not yet scanned." />
                 <TextBlock Text="{Binding StatusMessage}"
                            VerticalAlignment="Center"
                            Margin="10,0,0,0"
                            Foreground="Gray"
                            TextTrimming="CharacterEllipsis"
-                           MaxWidth="330" />
+                           MaxWidth="220" />
+                <TextBlock Text="{Binding ViewSheetScanStatusMessage}"
+                           VerticalAlignment="Center"
+                           Margin="10,0,0,0"
+                           Foreground="Gray"
+                           TextTrimming="CharacterEllipsis"
+                           MaxWidth="220" />
             </StackPanel>
             <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
                 <Button Content="Export JSON" Padding="10,4" Margin="0,0,8,0" Click="OnExportJsonClick" />
@@ -33,7 +45,7 @@
             </StackPanel>
         </DockPanel>
 
-        <TabControl>
+        <TabControl x:Name="MainTabControl" SelectionChanged="OnMainTabControlSelectionChanged">
 
         <TabItem Header="Summary">
             <DataGrid ItemsSource="{Binding SummaryRows}"

@@ -5,10 +5,12 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Navigation;
 using Microsoft.Win32;
+using RevitParameterInspector.Core.Logging;
 using RevitParameterInspector.Core.Models;
 using RevitParameterInspector.Export;
 using RevitParameterInspector.UI.Reselect;
 using RevitParameterInspector.UI.ViewModels;
+using RevitParameterInspector.UI.ViewSheetScan;
 
 namespace RevitParameterInspector.UI.Views;
 
@@ -16,13 +18,21 @@ public partial class MainWindow : Window
 {
     private readonly MainWindowViewModel _viewModel;
     private readonly IReselectRequestHandler? _reselectHandler;
+    private readonly IViewSheetScanRequestHandler? _viewSheetScanHandler;
 
-    public MainWindow(ElementContextSnapshot snapshot, IReselectRequestHandler? reselectHandler = null)
+    public MainWindow(
+        ElementContextSnapshot snapshot,
+        IReselectRequestHandler? reselectHandler = null,
+        IViewSheetScanRequestHandler? viewSheetScanHandler = null)
     {
         InitializeComponent();
         _viewModel = new MainWindowViewModel(snapshot);
         _reselectHandler = reselectHandler;
+        _viewSheetScanHandler = viewSheetScanHandler;
         DataContext = _viewModel;
+
+        Loaded += (_, _) => FileLogger.Log("MainWindow", "Loaded");
+        Closed += (_, _) => FileLogger.Log("MainWindow", "Closed");
     }
 
     private void OnReselectClick(object sender, RoutedEventArgs e)
@@ -88,6 +98,55 @@ public partial class MainWindow : Window
                 _ => $"Reloaded from selected element: {name}",
             };
         });
+    }
+
+    /// <summary>
+    /// The View / Sheet Context tab's Scan button: runs the deferred project-wide "which
+    /// views is this element visible in" scan on demand, since it can take minutes on a
+    /// project with many views and must never run automatically (see
+    /// RevitParameterInspector.Revit's ViewSheetContextReader class summary).
+    /// </summary>
+    private void OnScanViewSheetClick(object sender, RoutedEventArgs e)
+    {
+        if (_viewSheetScanHandler is null)
+        {
+            _viewModel.CompleteViewSheetScan(null, "View / Sheet scan is not available in this session.");
+            return;
+        }
+
+        var elementId = _viewModel.Snapshot.Identity?.ElementId ?? 0;
+        if (elementId <= 0)
+        {
+            _viewModel.CompleteViewSheetScan(null, "No element id available to scan.");
+            return;
+        }
+
+        _viewModel.BeginViewSheetScan();
+        _viewSheetScanHandler.RequestScan(elementId, OnViewSheetScanCompleted);
+    }
+
+    private void OnViewSheetScanCompleted(ViewSheetScanResult result)
+    {
+        Dispatcher.Invoke(() => _viewModel.CompleteViewSheetScan(result.Items, result.ErrorMessage));
+    }
+
+    /// <summary>
+    /// Tracks whether the View / Sheet Context tab is currently selected, so the Scan button
+    /// (placed next to Reselect, not inside the tab) only enables while that tab is showing.
+    /// TabControl.SelectionChanged bubbles up from any nested Selector (e.g. the Parameters
+    /// or Dictionary DataGrid's own row-selection events use the same routed event), so
+    /// e.Source must be checked against the TabControl itself, not just any sender.
+    /// </summary>
+    private void OnMainTabControlSelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+    {
+        if (e.Source is not System.Windows.Controls.TabControl tabControl)
+        {
+            return;
+        }
+
+        var isViewSheetContextTab = tabControl.SelectedItem is System.Windows.Controls.TabItem tabItem
+            && Equals(tabItem.Header, "View / Sheet Context");
+        _viewModel.SetViewSheetContextTabActive(isViewSheetContextTab);
     }
 
     private void OnCopyJsonClick(object sender, RoutedEventArgs e)

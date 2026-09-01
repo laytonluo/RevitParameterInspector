@@ -3,6 +3,7 @@ using System.IO;
 using System.Reflection;
 using System.Windows.Media.Imaging;
 using Autodesk.Revit.UI;
+using RevitParameterInspector.Core.Logging;
 using RevitParameterInspector.Revit.Commands;
 
 namespace RevitParameterInspector.Revit;
@@ -18,6 +19,7 @@ public sealed class RevitParameterInspectorApplication : IExternalApplication
 
     public Result OnStartup(UIControlledApplication application)
     {
+        FileLogger.Log("Application", "OnStartup begin");
         RibbonPanel panel;
         try
         {
@@ -30,6 +32,7 @@ public sealed class RevitParameterInspectorApplication : IExternalApplication
             // one-time dialog (v0.3.0 shipped with a shared try/catch around both AddItem calls,
             // so one button's failure silently took the other down with it; each button now
             // fails independently and reports why).
+            FileLogger.LogException("Application", "CreateRibbonPanel", ex);
             ShowStartupError("Failed to create the ParameterInspector ribbon panel", ex);
             return Result.Failed;
         }
@@ -37,6 +40,7 @@ public sealed class RevitParameterInspectorApplication : IExternalApplication
         AddButtonSafely(panel, "RevitParameterInspector", BuildInspectButtonData);
         AddButtonSafely(panel, "Selection Ids List Ex", BuildSelectionIdsListButtonData);
 
+        FileLogger.Log("Application", "OnStartup end");
         return Result.Succeeded;
     }
 
@@ -48,6 +52,7 @@ public sealed class RevitParameterInspectorApplication : IExternalApplication
         }
         catch (Exception ex)
         {
+            FileLogger.LogException("Application", $"AddButton({buttonLabel})", ex);
             ShowStartupError($"Failed to add the \"{buttonLabel}\" button", ex);
         }
     }
@@ -55,7 +60,11 @@ public sealed class RevitParameterInspectorApplication : IExternalApplication
     private static void ShowStartupError(string context, Exception ex) =>
         TaskDialog.Show("RevitParameterInspector", $"{context}:\n{ex}");
 
-    public Result OnShutdown(UIControlledApplication application) => Result.Succeeded;
+    public Result OnShutdown(UIControlledApplication application)
+    {
+        FileLogger.Log("Application", "OnShutdown");
+        return Result.Succeeded;
+    }
 
     private static PushButtonData BuildInspectButtonData()
     {
