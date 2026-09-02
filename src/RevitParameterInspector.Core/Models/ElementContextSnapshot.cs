@@ -29,6 +29,16 @@ public sealed class ElementContextSnapshot
     /// </summary>
     public List<ViewSheetContextItem> ViewSheetContexts { get; set; } = new();
 
+    /// <summary>
+    /// True when the inspected element has no single owner view (e.g. a normal model element
+    /// like a wall/column, as opposed to a view-specific annotation such as a tag or
+    /// dimension), meaning the expensive project-wide "which views is this element visible
+    /// in" scan was skipped at build time and can be run on demand instead (the View / Sheet
+    /// Context tab's Scan button; the scan itself lives in
+    /// RevitParameterInspector.Revit's ViewSheetContextReader.ScanProjectWide).
+    /// </summary>
+    public bool ViewSheetScanPending { get; set; }
+
     public List<DictionaryTermInfo> Dictionary { get; set; } = new();
 
     /// <summary>Distinct API names looked up during this build that had no dictionary mapping, grouped by lookup category. See HANDOFF Section 29.</summary>

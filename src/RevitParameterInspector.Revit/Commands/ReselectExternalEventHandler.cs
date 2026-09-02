@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Autodesk.Revit.UI;
+using RevitParameterInspector.Core.Logging;
 using RevitParameterInspector.Revit.Compatibility;
 using RevitParameterInspector.Revit.Selection;
 using RevitParameterInspector.UI.Reselect;
@@ -34,12 +36,16 @@ public sealed class ReselectExternalEventHandler : IExternalEventHandler
 
     public void Execute(UIApplication app)
     {
+        var stopwatch = Stopwatch.StartNew();
+        FileLogger.Log("ReselectHandler", "Execute begin");
+
         var callback = _pendingCallback;
         var elementId = _pendingElementId;
         _pendingCallback = null;
         _pendingElementId = null;
         if (callback is null)
         {
+            FileLogger.Log("ReselectHandler", "Execute end: no pending callback");
             return;
         }
 
@@ -77,7 +83,12 @@ public sealed class ReselectExternalEventHandler : IExternalEventHandler
             result.Snapshot = null;
             result.SourceType = ReselectSourceType.None;
             result.ErrorMessage = $"Reselect failed: {ex.Message}";
+            FileLogger.LogException("ReselectHandler", "Execute", ex);
         }
+
+        FileLogger.Log(
+            "ReselectHandler",
+            $"Execute end: SourceType={result.SourceType}, Error={result.ErrorMessage} ({stopwatch.ElapsedMilliseconds} ms)");
 
         // Revit and the modeless WPF window share the same STA thread, so the callback may
         // touch the UI directly here.

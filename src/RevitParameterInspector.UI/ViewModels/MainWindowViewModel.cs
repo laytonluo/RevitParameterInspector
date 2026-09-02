@@ -24,6 +24,10 @@ public sealed class MainWindowViewModel : INotifyPropertyChanged
     private string _parameterSearchText = string.Empty;
     private string _selectedParameterScope = AllScopesOption;
     private string _statusMessage = string.Empty;
+    private bool _viewSheetScanPending;
+    private bool _viewSheetScanInProgress;
+    private string _viewSheetScanStatusMessage = string.Empty;
+    private bool _isViewSheetContextTabActive;
 
     private const string AllScopesOption = "All";
 
@@ -104,6 +108,82 @@ public sealed class MainWindowViewModel : INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    /// True when the inspected element has no owner view, so the View / Sheet Context tab's
+    /// Scan button should be shown (see <see cref="ElementContextSnapshot.ViewSheetScanPending"/>).
+    /// Turns false once <see cref="CompleteViewSheetScan"/> runs, whether it succeeded or not.
+    /// </summary>
+    public bool ViewSheetScanPending
+    {
+        get => _viewSheetScanPending;
+        private set
+        {
+            if (_viewSheetScanPending == value)
+            {
+                return;
+            }
+
+            _viewSheetScanPending = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(CanScanViewSheetContext));
+        }
+    }
+
+    /// <summary>True while the project-wide scan is running; disables the Scan button so a second click can't overlap it.</summary>
+    public bool ViewSheetScanInProgress
+    {
+        get => _viewSheetScanInProgress;
+        private set
+        {
+            if (_viewSheetScanInProgress == value)
+            {
+                return;
+            }
+
+            _viewSheetScanInProgress = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(CanScanViewSheetContext));
+        }
+    }
+
+    /// <summary>
+    /// Drives the Scan button's IsEnabled (the button itself lives next to Reselect, not
+    /// inside the View / Sheet Context tab, so it needs its own gate for "is that tab
+    /// showing"). True only when all three hold: the View / Sheet Context tab is selected
+    /// (<see cref="SetViewSheetContextTabActive"/>), the inspected element has no owner view
+    /// (<see cref="ViewSheetScanPending"/>), and it has not already been scanned or is not
+    /// mid-scan.
+    /// </summary>
+    public bool CanScanViewSheetContext => _isViewSheetContextTabActive && ViewSheetScanPending && !ViewSheetScanInProgress;
+
+    /// <summary>Called from the window's TabControl.SelectionChanged when the View / Sheet Context tab is entered or left.</summary>
+    public void SetViewSheetContextTabActive(bool isActive)
+    {
+        if (_isViewSheetContextTabActive == isActive)
+        {
+            return;
+        }
+
+        _isViewSheetContextTabActive = isActive;
+        OnPropertyChanged(nameof(CanScanViewSheetContext));
+    }
+
+    /// <summary>Feedback line next to the Scan button (progress, result count, or error).</summary>
+    public string ViewSheetScanStatusMessage
+    {
+        get => _viewSheetScanStatusMessage;
+        private set
+        {
+            if (_viewSheetScanStatusMessage == value)
+            {
+                return;
+            }
+
+            _viewSheetScanStatusMessage = value;
+            OnPropertyChanged();
+        }
+    }
+
     public MainWindowViewModel(ElementContextSnapshot snapshot)
     {
         LoadSnapshot(snapshot);
@@ -136,6 +216,9 @@ public sealed class MainWindowViewModel : INotifyPropertyChanged
         LocationRows = Wrap(ObjectInspector.ToFieldRows(snapshot.Location));
         RelationshipRows = Wrap(ObjectInspector.ToFieldRows(snapshot.Relationships));
         ViewSheetContextRows = snapshot.ViewSheetContexts.Select(item => new SelectableViewSheetContextRow(item)).ToList();
+        _viewSheetScanPending = snapshot.ViewSheetScanPending;
+        _viewSheetScanInProgress = false;
+        _viewSheetScanStatusMessage = string.Empty;
         DictionaryTerms = snapshot.Dictionary;
         DictionaryCountsText = $"Resolved Terms: {snapshot.Dictionary.Count}    Unresolved Terms: {snapshot.UnresolvedDictionaryTerms.Count}";
         UnresolvedDictionaryTermsText = BuildUnresolvedTermsText(snapshot.UnresolvedDictionaryTerms);
@@ -194,6 +277,47 @@ public sealed class MainWindowViewModel : INotifyPropertyChanged
     {
         var elementId = Snapshot.Identity?.ElementIdString ?? "?";
         return $"ID :{elementId}、{label}:{string.Join("、", names)}";
+    }
+
+    /// <summary>Called just before raising the scan request, to show a "scanning" placeholder - the underlying Revit API call can take minutes on large projects.</summary>
+    public void BeginViewSheetScan()
+    {
+        ViewSheetScanInProgress = true;
+        ViewSheetScanStatusMessage = "Scanning project-wide views... this can take a while on large projects.";
+    }
+
+    /// <summary>
+    /// Merges the on-demand project-wide scan's rows into the existing set (skipping
+    /// anything already shown, e.g. the active view) and keeps the snapshot/export payloads
+    /// (JSON/AI context) in sync with the merged rows. Called whether the scan succeeded or
+    /// failed - <paramref name="scannedItems"/> is null on failure.
+    /// </summary>
+    public void CompleteViewSheetScan(IReadOnlyList<ViewSheetContextItem>? scannedItems, string? errorMessage)
+    {
+        ViewSheetScanInProgress = false;
+        ViewSheetScanPending = false;
+
+        if (scannedItems is null)
+        {
+            ViewSheetScanStatusMessage = errorMessage ?? "View / Sheet scan failed.";
+            return;
+        }
+
+        var existingKeys = new HashSet<string>(
+            Snapshot.ViewSheetContexts.Select(item => $"{item.ContextType}|{item.ElementId}"));
+        var newItems = scannedItems.Where(item => existingKeys.Add($"{item.ContextType}|{item.ElementId}")).ToList();
+
+        Snapshot.ViewSheetContexts.AddRange(newItems);
+        ViewSheetContextRows = ViewSheetContextRows
+            .Concat(newItems.Select(item => new SelectableViewSheetContextRow(item)))
+            .ToList();
+        RawJson = JsonExporter.Serialize(Snapshot);
+        AiContext = AiContextComposer.Build(Snapshot);
+        ViewSheetScanStatusMessage = $"Scan complete: {newItems.Count} additional row(s) found.";
+
+        OnPropertyChanged(nameof(ViewSheetContextRows));
+        OnPropertyChanged(nameof(RawJson));
+        OnPropertyChanged(nameof(AiContext));
     }
 
     /// <summary>Returns null when nothing is checked anywhere (callers fall back to full output).</summary>

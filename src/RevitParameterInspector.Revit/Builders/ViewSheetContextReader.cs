@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Autodesk.Revit.DB;
+using RevitParameterInspector.Core.Logging;
 using RevitParameterInspector.Revit.Compatibility;
 using CoreModels = RevitParameterInspector.Core.Models;
 
@@ -9,18 +11,28 @@ namespace RevitParameterInspector.Revit.Builders;
 
 /// <summary>
 /// Collects the View / Sheet context rows for the inspected element
-/// (HANDOFF_Update_ViewSheetContext_V1). When the element itself is a View/Sheet/Viewport,
-/// only the direct relationships are reported. For any other model element, a project-wide
-/// visibility scan finds every View3D/ViewPlan/ViewSection (elevations are ViewSections in
-/// the API) whose collector contains the element; each such view row's AdditionalInfo shows
-/// its Viewport/Sheet placement, or "N/A" when the view is not placed on any sheet.
+/// (HANDOFF_Update_ViewSheetContext_V1). When the element itself is a View/Sheet/Viewport, or
+/// has a single owner view (2D annotation elements - tags, dimensions, detail items, etc. -
+/// only ever appear on the one view that owns them), only that direct relationship is
+/// reported and <see cref="Read"/> resolves it immediately. Any other element (ordinary model
+/// elements like walls/columns/beams, which can appear in many views) has no single owner
+/// view to look up, so <see cref="Read"/> sets <paramref name="scanPending"/> instead of
+/// running the expensive project-wide scan itself: finding every View3D/ViewPlan/ViewSection
+/// (elevations are ViewSections in the API) whose collector contains the element requires
+/// constructing a view-scoped <see cref="FilteredElementCollector"/> per view, which forces
+/// Revit to regenerate each view that hasn't been opened yet - on a project with many views
+/// this can take minutes and looks like Revit is stuck repainting. That scan is
+/// <see cref="ScanProjectWide"/>, run only on demand (the View / Sheet Context tab's Scan
+/// button), never automatically on every inspect/reselect.
 /// </summary>
 public static class ViewSheetContextReader
 {
-    public static List<CoreModels.ViewSheetContextItem> Read(Document document, View? activeView, Element inspectedElement)
+    public static List<CoreModels.ViewSheetContextItem> Read(
+        Document document, View? activeView, Element inspectedElement, out bool scanPending)
     {
         var items = new List<CoreModels.ViewSheetContextItem>();
         var seen = new HashSet<string>();
+        scanPending = false;
 
         switch (inspectedElement)
         {
@@ -44,13 +56,23 @@ public static class ViewSheetContextReader
                 break;
 
             default:
-                AddViewsWhereElementVisible(items, seen, document, inspectedElement);
+                if (TryGetOwnerView(document, inspectedElement) is { } ownerView)
+                {
+                    AddView(items, seen, ownerView, "Owner View");
+                    AddSheetsContainingView(items, seen, document, ownerView);
+                }
+                else if (inspectedElement is not ElementType)
+                {
+                    // Element types never appear in view collectors - no scan needed for them.
+                    scanPending = true;
+                }
+
                 break;
         }
 
         // Always add the active view (and its sheet, if placed) for any inspected element.
-        // The seen-set keeps the visibility-scan row (with its placement info) when the
-        // active view already appeared there.
+        // The seen-set keeps the owner-view row (with its placement info) when the active
+        // view already appeared there.
         if (activeView is not null && !activeView.IsTemplate)
         {
             AddView(items, seen, activeView);
@@ -58,6 +80,45 @@ public static class ViewSheetContextReader
         }
 
         return items;
+    }
+
+    /// <summary>
+    /// The expensive project-wide "which views is this element visible in" scan, deferred
+    /// from <see cref="Read"/> (see the class summary). Call this only on demand - e.g. from
+    /// the View / Sheet Context tab's Scan button via an ExternalEvent - never automatically
+    /// from the inspect/reselect flow.
+    /// </summary>
+    public static List<CoreModels.ViewSheetContextItem> ScanProjectWide(Document document, Element element)
+    {
+        var items = new List<CoreModels.ViewSheetContextItem>();
+        var seen = new HashSet<string>();
+        AddViewsWhereElementVisible(items, seen, document, element);
+        return items;
+    }
+
+    /// <summary>
+    /// 2D annotation elements (tags, dimensions, detail items, filled regions, text notes...)
+    /// only ever appear on the one view that owns them - <see cref="Element.OwnerViewId"/>
+    /// resolves that directly without any project-wide scan. Ordinary model elements (walls,
+    /// columns, beams...) have no owner view (<see cref="ElementId.InvalidElementId"/>) and
+    /// fall through to the deferred <see cref="ScanProjectWide"/> path instead.
+    /// </summary>
+    private static View? TryGetOwnerView(Document document, Element element)
+    {
+        try
+        {
+            var ownerViewId = element.OwnerViewId;
+            if (ownerViewId == ElementId.InvalidElementId)
+            {
+                return null;
+            }
+
+            return document.GetElement(ownerViewId) is View view && !view.IsTemplate ? view : null;
+        }
+        catch
+        {
+            return null;
+        }
     }
 
     /// <summary>
@@ -77,6 +138,11 @@ public static class ViewSheetContextReader
             return;
         }
 
+        var totalStopwatch = Stopwatch.StartNew();
+        var msByViewType = new Dictionary<string, long>();
+        var countByViewType = new Dictionary<string, int>();
+        var visibleCount = 0;
+
         try
         {
             var filter = new ElementMulticlassFilter(
@@ -84,15 +150,36 @@ public static class ViewSheetContextReader
             var candidateViews = new FilteredElementCollector(document)
                 .WherePasses(filter)
                 .Cast<View>()
-                .Where(view => !view.IsTemplate);
+                .Where(view => !view.IsTemplate)
+                .ToList();
+
+            FileLogger.Log("ViewSheetContextReader", $"AddViewsWhereElementVisible: candidate view count={candidateViews.Count}");
 
             foreach (var view in candidateViews)
             {
-                if (!IsElementVisibleInView(document, view, element.Id))
+                var typeKey = view.GetType().Name;
+                var viewStopwatch = Stopwatch.StartNew();
+                var isVisible = IsElementVisibleInView(document, view, element.Id);
+                viewStopwatch.Stop();
+
+                msByViewType.TryGetValue(typeKey, out var existingMs);
+                msByViewType[typeKey] = existingMs + viewStopwatch.ElapsedMilliseconds;
+                countByViewType.TryGetValue(typeKey, out var existingCount);
+                countByViewType[typeKey] = existingCount + 1;
+                if (viewStopwatch.ElapsedMilliseconds > 200)
+                {
+                    FileLogger.Log(
+                        "ViewSheetContextReader",
+                        $"Slow view check: Type={typeKey}, Name={SafeGetName(view)}, "
+                            + $"Id={RevitCompatibility.GetIdValue(view.Id)}, Elapsed={viewStopwatch.ElapsedMilliseconds} ms");
+                }
+
+                if (!isVisible)
                 {
                     continue;
                 }
 
+                visibleCount++;
                 var placements = GetSheetPlacements(document, view);
                 var additionalInfo = placements.Count == 0
                     ? "Viewport: N/A | Sheet: N/A"
@@ -105,10 +192,21 @@ public static class ViewSheetContextReader
                 }
             }
         }
-        catch
+        catch (Exception ex)
         {
             // The visibility scan is best-effort; a failure must never break inspection
             // (HANDOFF Section 7).
+            FileLogger.LogException("ViewSheetContextReader", "AddViewsWhereElementVisible", ex);
+        }
+        finally
+        {
+            var breakdown = string.Join(
+                ", ",
+                msByViewType.Select(kvp => $"{kvp.Key}: count={countByViewType[kvp.Key]}, totalMs={kvp.Value}"));
+            FileLogger.Log(
+                "ViewSheetContextReader",
+                $"AddViewsWhereElementVisible done: visibleCount={visibleCount}, "
+                    + $"totalElapsed={totalStopwatch.ElapsedMilliseconds} ms, breakdown=[{breakdown}]");
         }
     }
 

@@ -1,5 +1,6 @@
 using System;
 using Autodesk.Revit.UI;
+using RevitParameterInspector.Core.Logging;
 using RevitParameterInspector.UI.Reselect;
 
 namespace RevitParameterInspector.Revit.Commands;
@@ -29,12 +30,14 @@ public sealed class RevitReselectRequestHandler : IReselectRequestHandler
 
     public void RequestReselect(Action<ReselectResult> onComplete)
     {
+        FileLogger.Log("ReselectRequest", "RequestReselect: raising external event");
         _handler.SetPendingCallback(onComplete);
         _externalEvent.Raise();
     }
 
     public void RequestInspectById(long elementId, Action<ReselectResult> onComplete)
     {
+        FileLogger.Log("ReselectRequest", $"RequestInspectById({elementId}): raising external event");
         _handler.SetPendingInspectById(elementId, onComplete);
         _externalEvent.Raise();
     }
