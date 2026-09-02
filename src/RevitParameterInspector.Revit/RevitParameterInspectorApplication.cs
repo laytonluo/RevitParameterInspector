@@ -66,6 +66,13 @@ public sealed class RevitParameterInspectorApplication : IExternalApplication
         return Result.Succeeded;
     }
 
+    // Ribbon uses LargeImage (32x32); the Quick Access Toolbar prefers the small Image (16x16)
+    // when a user right-clicks a button and picks "Add to Quick Access Toolbar" - without it,
+    // Revit falls back to scaling LargeImage down, which looks soft. Both are decoded from the
+    // same source file at different DecodePixelWidth/Height, so there is only one asset to ship.
+    private const int LargeImageSize = 32;
+    private const int SmallImageSize = 16;
+
     private static PushButtonData BuildInspectButtonData()
     {
         var data = new PushButtonData(
@@ -76,7 +83,8 @@ public sealed class RevitParameterInspectorApplication : IExternalApplication
         {
             ToolTip = "RevitParameterInspector: inspect the current selection, "
                 + "or the active view when nothing is selected.",
-            LargeImage = LoadIcon("PARAINS.png"),
+            LargeImage = LoadIcon("PARAINS.png", LargeImageSize),
+            Image = LoadIcon("PARAINS.png", SmallImageSize),
         };
 
         return data;
@@ -92,14 +100,19 @@ public sealed class RevitParameterInspectorApplication : IExternalApplication
         {
             ToolTip = "Selection Ids List Ex: show the active view id and selected element ids, "
                 + "grouped by category, ready to copy.",
-            LargeImage = LoadIcon("IDSLIST.png"),
+            LargeImage = LoadIcon("IDSLIST.png", LargeImageSize),
+            Image = LoadIcon("IDSLIST.png", SmallImageSize),
         };
 
         return data;
     }
 
-    /// <summary>Icons ship next to the add-in assembly under an "icons" folder (same convention as the dictionary).</summary>
-    private static BitmapImage LoadIcon(string fileName)
+    /// <summary>
+    /// Icons ship next to the add-in assembly under an "icons" folder (same convention as the
+    /// dictionary). <paramref name="pixelSize"/> sets DecodePixelWidth/Height so the same source
+    /// file serves both the ribbon's LargeImage and the QAT's small Image.
+    /// </summary>
+    private static BitmapImage LoadIcon(string fileName, int pixelSize)
     {
         var assemblyLocation = Assembly.GetExecutingAssembly().Location;
         var assemblyDirectory = string.IsNullOrEmpty(assemblyLocation) ? null : Path.GetDirectoryName(assemblyLocation);
@@ -122,6 +135,8 @@ public sealed class RevitParameterInspectorApplication : IExternalApplication
         var image = new BitmapImage();
         image.BeginInit();
         image.CacheOption = BitmapCacheOption.OnLoad;
+        image.DecodePixelWidth = pixelSize;
+        image.DecodePixelHeight = pixelSize;
         image.StreamSource = stream;
         image.EndInit();
         image.Freeze();

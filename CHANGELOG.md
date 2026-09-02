@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.4.5] - 2026-09-02
+
+### Added
+
+- Ribbon buttons now also set `PushButtonData.Image` (16x16), not just `LargeImage` (32x32), so
+  "Add to Quick Access Toolbar" gets a crisp icon instead of a softened downscale of the large
+  one. Both sizes decode from the same `PARAINS.png`/`IDSLIST.png` source file via
+  `BitmapImage.DecodePixelWidth`/`DecodePixelHeight` - no extra asset files needed.
+
 ## [0.3.0] - 2026-08-22
 
 ### Added
